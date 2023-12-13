@@ -181,7 +181,6 @@ def manual_inverse_continuous_cosine_transform(
             Returns: Values of the original function at the query points, a 1D array of shape (M,)
 
             """
-    # Code written below
     assert len(query_points.shape) == 2
     N = query_points.shape[1]
     assert len(fft_image.shape) == N
