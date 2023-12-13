@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<SimBase.Document Type="MissionFile" version="1,0">
+  <Title>Mission reno default</Title>
+  <Filename>LowAlt-RiffeLake.spb</Filename>
+  <WorldBase.Flight>
+    <SimMission.RaceCourse InstanceId="{53C65E91-1A35-4FE2-B90E-E50DDCDC0783}">
+      <SimBase.Descr>RaceCourse</SimBase.Descr>
+      <RaceCourseWarningRadiusM>11000.000</RaceCourseWarningRadiusM>
+      <RaceCourseDSQRadiusM>12500.000</RaceCourseDSQRadiusM>
+      <WorldBase.ObjectReferenceList>
+        <ObjectReference id="VolumeRacePoint_WP1" InstanceId="{C2FDB951-6AF6-4ED6-B5D3-ECE011EA2745}" TemplateInstanceId="{3BDFA9C0-C7BF-498E-80E9-2B5F94CCD1BE}" />
+        <ObjectReference id="VolumeRacePointEndRace" InstanceId="{85D6E33A-C84F-4B63-90AF-FEE8BD9B3054}" />
+      </WorldBase.ObjectReferenceList>
+    </SimMission.RaceCourse>
+    <SimMission.GeoLocImage>
+      <GeolocImagePath>Missions/Asobo/MRK/LowAltitude/lowalt-riffelake/images/rewardScreenPath.jpg</GeolocImagePath>
+      <GeolocStart>0.108,0.630</GeolocStart>
+      <GeolocEnd>0.975,0.230</GeolocEnd>
+      <SimBaseUI.Size>3674,1176</SimBaseUI.Size>
+    </SimMission.GeoLocImage>
+    <SimMission.RequestTeleportAction InstanceId="{37EE76F0-5E27-4351-B6B3-64DA66657F48}">
+      <SimStateFilename>LowAlt-RiffeLake</SimStateFilename>
+    </SimMission.RequestTeleportAction>
+    <SimTemplate.UseTemplate TemplateId="{C4AD8F62-8178-48CE-948C-F0E930D06B31}" InstanceId="{3BDFA9C0-C7BF-498E-80E9-2B5F94CCD1BE}">
+      <SimBase.Descr>WP1</SimBase.Descr>
+      <SimMission.GateRacePoint InstanceId="{C2FDB951-6AF6-4ED6-B5D3-ECE011EA2745}">
+        <Width>25000.000</Width>
+        <Height>53000.000</Height>
+        <WorldBase.AttachedWorldPosition>
+          <WorldPosition>N46° 32' 4.13",W122° 25' 29.68",+000000.00</WorldPosition>
+          <Orientation>0.000,0.000,104.800</Orientation>
+        </WorldBase.AttachedWorldPosition>
+      </SimMission.GateRacePoint>
+      <SimMission.CylinderArea InstanceId="{8D3B91E2-E537-4156-BE7B-D481794E5A1E}">
+        <WorldBase.AttachedWorldPosition>
+          <WorldPosition>N46° 32' 4.13",W122° 25' 29.68",+000000.00</WorldPosition>
+          <Orientation>0.000,0.000,104.800</Orientation>
+        </WorldBase.AttachedWorldPosition>
+      </SimMission.CylinderArea>
+    </SimTemplate.UseTemplate>
+    <SimMission.RectangleArea InstanceId="{103E75E5-BCC7-4527-9B73-B81E119A52C3}">
+      <SimBase.Descr>EndTrigger Area</SimBase.Descr>
+      <Length>1500.000</Length>
+      <Width>100.000</Width>
+      <Height>55000.000</Height>
+      <WorldBase.AttachedWorldPosition>
+        <WorldPosition>N46° 16' 37.56",W121° 34' 38.70",-000150.00</WorldPosition>
+        <AltitudeIsAGL>true</AltitudeIsAGL>
+        <Orientation>0.000,0.000,105.000</Orientation>
+      </WorldBase.AttachedWorldPosition>
+    </SimMission.RectangleArea>
+    <SimMission.Calculator id="TimeGoal" InstanceId="{8CE459DD-882F-4F8F-BD29-46D5EAB68428}">
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <SimBase.Descr>AltitudeSLBaseMin</SimBase.Descr>
+      <CalculatorFormula>
+				280
+			</CalculatorFormula>
+    </SimMission.Calculator>
+    <SimMission.Calculator id="BaseScoreAltitudeMin" InstanceId="{83614E9C-4427-4E8E-8515-8A1D91CB92BC}">
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <SimBase.Descr>BaseScoreAltitudeMin</SimBase.Descr>
+      <CalculatorFormula>
+				(X:Section) 1 == if{ 745 }
+				(X:Section) 2 == if{ 745 }
+				(X:Section) 3 == if{ 745 }
+				(X:Section) 4 == if{ 820 }
+				(X:Section) 5 == if{ 958 }
+				(X:Section) 6 == if{ 1125 }
+				(X:Section) 7 == if{ 1263 }
+				(X:Section) 8 == if{ 1601 }
+				(X:Section) 9 == if{ 2165 }
+				(X:Section) 10 == if{ 3241 }
+			</CalculatorFormula>
+      <CalculatorParameterList>
+        <ReferenceParameter NameInFormula="Section" UniqueRefId="{4317D4B9-6E4B-4124-92A3-44618FDEC843}" />
+      </CalculatorParameterList>
+    </SimMission.Calculator>
+    <SimMission.Calculator id="BaseScoreAltitudeMax" InstanceId="{C70B2B0C-DC5B-4BFB-81EA-1DA3824A4304}">
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <SimBase.Descr>BaseScoreAltitudeMax</SimBase.Descr>
+      <CalculatorFormula>
+				(X:Section) 1 == if{ 3745 }
+				(X:Section) 2 == if{ 3745 }
+				(X:Section) 3 == if{ 3745 }
+				(X:Section) 4 == if{ 3820 }
+				(X:Section) 5 == if{ 3958 }
+				(X:Section) 6 == if{ 4125 }
+				(X:Section) 7 == if{ 4263 }
+				(X:Section) 8 == if{ 4601 }
+				(X:Section) 9 == if{ 5165 }
+				(X:Section) 10 == if{ 6241 }
+			</CalculatorFormula>
+      <CalculatorParameterList>
+        <ReferenceParameter NameInFormula="Section" UniqueRefId="{4317D4B9-6E4B-4124-92A3-44618FDEC843}" />
+      </CalculatorParameterList>
+    </SimMission.Calculator>
+    <SimMission.Calculator id="SectionTimeReference" InstanceId="{1EC62447-9647-472E-9A92-AA5F0B8C5827}">
+      <SimBase.Descr>SectionTimeReference</SimBase.Descr>
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <CalculatorFormula>
+				[TotaPathlLength]
+				10
+				/
+				[BestSpeed_metpsec]
+				/
+			</CalculatorFormula>
+      <CalculatorParameterList>
+        <PathParameter NameInFormula="TotaPathlLength">
+          <WantedPathParameter>TotalLength</WantedPathParameter>
+          <PathPoint>
+            <WorldBase.AttachedWorldObject>
+              <ObjectReference id="VolumeRacePoint_WP1" InstanceId="{C2FDB951-6AF6-4ED6-B5D3-ECE011EA2745}" TemplateInstanceId="{3BDFA9C0-C7BF-498E-80E9-2B5F94CCD1BE}" />
+            </WorldBase.AttachedWorldObject>
+          </PathPoint>
+          <PathPoint>
+            <WorldBase.AttachedWorldObject>
+              <ObjectReference id="AreaEndCourse" InstanceId="{103E75E5-BCC7-4527-9B73-B81E119A52C3}" />
+            </WorldBase.AttachedWorldObject>
+          </PathPoint>
+        </PathParameter>
+        <FormulaParameter NameInFormula="BestSpeed_metpsec" StartValue="324.000" />
+      </CalculatorParameterList>
+    </SimMission.Calculator>
+    <SceneryObjects.VisualEffectObject InstanceId="{B66D60F5-78E1-4590-8615-A4AC9921A8F7}">
+      <WorldBase.Scale>1.000</WorldBase.Scale>
+      <VisualEffectName>Smoke_SOS</VisualEffectName>
+      <WorldBase.AttachedWorldPosition>
+        <AltitudeIsAGL>true</AltitudeIsAGL>
+        <WorldPosition>N46° 31' 56.15",W122° 25' 32.35",+000001.00</WorldPosition>
+        <IsOnGround>true</IsOnGround>
+      </WorldBase.AttachedWorldPosition>
+    </SceneryObjects.VisualEffectObject>
+    <SceneryObjects.VisualEffectObject InstanceId="{A9BD9720-86A2-4B4F-8CE2-3A90F535E047}">
+      <WorldBase.Scale>1.000</WorldBase.Scale>
+      <VisualEffectName>Smoke_SOS</VisualEffectName>
+      <WorldBase.AttachedWorldPosition>
+        <AltitudeIsAGL>true</AltitudeIsAGL>
+        <WorldPosition>N46° 32' 12.15",W122° 25' 26.41",+000001.00</WorldPosition>
+        <IsOnGround>true</IsOnGround>
+      </WorldBase.AttachedWorldPosition>
+    </SceneryObjects.VisualEffectObject>
+    <SceneryObjects.VisualEffectObject InstanceId="{6C303999-9338-4D86-94E1-0E9C4B687BD0}">
+      <WorldBase.Scale>1.000</WorldBase.Scale>
+      <VisualEffectName>Smoke_SOS</VisualEffectName>
+      <WorldBase.AttachedWorldPosition>
+        <AltitudeIsAGL>true</AltitudeIsAGL>
+        <WorldPosition>N46° 16' 51.48",W121° 34' 32.19",+000000.00</WorldPosition>
+        <IsOnGround>true</IsOnGround>
+      </WorldBase.AttachedWorldPosition>
+    </SceneryObjects.VisualEffectObject>
+    <SceneryObjects.VisualEffectObject InstanceId="{994BDDB5-F2A1-4CB1-807E-EABE871671E9}">
+      <WorldBase.Scale>1.000</WorldBase.Scale>
+      <VisualEffectName>Smoke_SOS</VisualEffectName>
+      <WorldBase.AttachedWorldPosition>
+        <AltitudeIsAGL>true</AltitudeIsAGL>
+        <WorldPosition>N46° 16' 22.18",W121° 34' 43.01",+000000.00</WorldPosition>
+        <IsOnGround>true</IsOnGround>
+      </WorldBase.AttachedWorldPosition>
+    </SceneryObjects.VisualEffectObject>
+    <SimMission.RectangleArea InstanceId="{CE1E6CF8-B2BB-430C-8CED-D5163BC08B5E}">
+      <SimBase.Descr>StartOoB_Warning_Area</SimBase.Descr>
+      <Length>30000.000</Length>
+      <Width>1000.000</Width>
+      <Height>53000.000</Height>
+      <WorldBase.AttachedWorldObject>
+        <OffsetXYZ>0.000,0.000,-2275.000,0.000</OffsetXYZ>
+        <ObjectReference id="VolumeRacePoint_WP1" InstanceId="{C2FDB951-6AF6-4ED6-B5D3-ECE011EA2745}" TemplateInstanceId="{3BDFA9C0-C7BF-498E-80E9-2B5F94CCD1BE}" />
+      </WorldBase.AttachedWorldObject>
+    </SimMission.RectangleArea>
+  </WorldBase.Flight>
+  <WorldBase.TemplateResources>
+    <SimBase.ResourceName>Missions\Asobo\Templates\VolumeRacePointTemplate</SimBase.ResourceName>
+  </WorldBase.TemplateResources>
+</SimBase.Document>

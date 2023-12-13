@@ -1,0 +1,257 @@
+
+[Main]
+Title=TT:RIFFELAKE_NAME
+Description=TT:RIFFELAKE_NAME_Descr
+AppVersion=10.0.282174
+FlightVersion=1
+MissionType=LowAlt
+MenuHierarchy=MRK/Activities/10LowAlt
+MissionSubTypeTT=@asobo-mrk,TT:MENU.MAVERICK_ACTIVITIES
+;MissionSubTypeTT=@asobo-mrk,TT:MENU.MAVERICK_ACTIVITIES_LOWALT
+ActivityTitle=@asobo-mrk,TT:MENU.MAVERICK_ACTIVITIES_LOWALT
+IsMilitary=True
+
+[Options]
+Sound=True
+Pause=True
+Moonlight=True
+TextDisplayPage=0
+SlewDisplayPage=1
+AxisIndicator=Off
+Titles=False
+
+[Sim.0]
+;Sim=Boeing F/A 18E Super Hornet Asobo
+Sim=Boeing F/A 18E Super Hornet Mrk Asobo
+SimFile=cruise.FLT
+Pilot=Pilot_Male_Mrk
+PilotTT=@asobo-mrk,TT:MENU.MRK
+
+[ResourcePath]
+Path=LowAltitude
+
+[ObjectFile]
+NbFiles=3
+File.0=Missions\Asobo\MRK\LowAltitude\Default\LowAltitude
+File.1=LowAlt-RiffeLake
+File.2=lowalt-Riffelake-enviro
+
+[Atc_Menu]
+Visible=False
+
+[Weather]
+UseWeatherFile=True
+CloudmapPosOverride=True
+CloudmapInitialPosX=377022.2
+CloudmapInitialPosY=0.00000
+
+[Assistance]
+Preset=ASSISTANCE_PRESET_LOWALT
+
+[Briefing]
+BriefingText=TT:RIFFELAKE_BRIEFING
+BriefingImage0=./images/LC_F18_01_briefing.jpg
+BriefingImageOverlay0=./images/Washington/Washington.uxml
+BriefingImage1=./images/Map_02_briefing.jpg
+;StartUpLocationInfo0=FLIGHT_INFO_RUNWAY_ARRIVAL_ELEVATION
+;StartUpLocationInfo1=FLIGHT_INFO_RUNWAY_ARRIVAL_SLOPE
+StartUpLocationInfo2=FLIGHT_INFO_LOCATION_TIME
+StartUpLocationInfo3=FLIGHT_INFO_LOCATION_WIND
+StartUpAircraftInfo0=FLIGHT_INFO_AIRCRAFT_IAS
+StartUpAircraftInfo1=FLIGHT_INFO_AIRCRAFT_HEADING
+;StartUpAircraftInfo2=FLIGHT_INFO_AIRCRAFT_STALL_SPEED_FLAPS_UP
+
+[Loading]
+ImageName=./images/LC_F18_01_loading.jpg
+Tips0=@asobo-mrk,TT:LOADING.SPECIFIC_TIPS.LOWALT_001
+Tips1=@asobo-mrk,TT:LOADING.SPECIFIC_TIPS.LOWALT_002
+Tips2=@asobo-mrk,TT:LOADING.SPECIFIC_TIPS.LOWALT_003
+Tips3=@asobo-mrk,TT:LOADING.SPECIFIC_TIPS.LOWALT_004
+Tips4=@asobo-mrk,TT:LOADING.SPECIFIC_TIPS.LOWALT_005
+
+[Panels]
+Panel.On=True
+HUD.On=False
+
+[Window.1]
+Order=255
+Active=True
+Undocked=False
+Maximized=True
+ScreenUniCoords=0, 0, 8192, 2800
+UndocCoords=0, 0, 0, 0
+CurrentCamera={BCA3FDD1-FB83-4BBA-8407-4922A7F0D00C}
+
+[ATC_AgentManager]
+NumberofAgents=0
+
+[ATC_Aircraft.0]
+ActiveFlightPlan=False
+RequestedFlightPlan=True
+AcState=ACSTATE_CUSTOM
+NumberofWaypoints=0
+ClearanceFlags=80
+CtCur=CLEARANCE_NONE
+WaypointNext=0
+AltCleared=-1
+HdgAssigned=-1
+SquawkAssigned=-60928
+LandingSequence=LANDING_NONE
+DepartureRequest=DEPARTURE_VFR_REQUEST_NONE
+ParkingRequest=PARKING_NAME_NONE
+ParkingTypeRequest=PARKING_TYPE_NONE
+PatternLeg=PATTERN_LEG_NONE
+ApproachIndex=-1
+ApproachTransitionIndex=-1
+ApproachRequestIndex=-1
+ApproachTransitionRequestIndex=-1
+RunwayIndex=-1
+RunwayRequestIndex=-1
+ParkingIndex=-1
+FlightFollowing=FLIGHT_FOLLOWING_NO
+AirspaceTransition=AIRSPACE_TRANSITION_NONE
+BVAirspaceTransition=BV_TYPE_NONE
+BVAirspaceTransitionReq=BV_TYPE_NONE
+TakeoffSequence=TAKEOFF_SEQUENCE_NONE
+LandingSequenceNumber=-1
+TaxiRouteCurrent=-1
+CruisingAltitude=-1
+RequestedCruisingAltitude=-1
+ExpectedAltitude=-1
+AircraftSignature=1,0
+
+[ATC_RequestedFlightPlan.0]
+title=Riffle Lake
+description=Riffle Lake
+type=VFR
+routetype=0
+cruising_altitude=500
+departure_id=CUST0, N46° 32' 53.84", W122° 28' 8.98",+000000.00
+departure_position=
+destination_id=CUST2, N46° 17' 51.40",W121° 31' 32.61",+000000.00
+departure_name=Riffe Lake
+destination_name=Washington
+waypoint.0=, , , CUST0, U, N46° 32' 53.84", W122° 28' 8.98",+001109.00,
+waypoint.1=, , , CUST1, U, N46° 17' 51.40",W121° 31' 32.61",+000000.00,
+waypoint.2=, , , CUST2, U, N46° 17' 51.40",W121° 31' 33.61",+004520.00,
+
+[ATC_AircraftManager]
+NumberofAircraft=1
+
+[ATC_MessageSystem]
+FrequencyNodes=0
+
+[DateTimeSeason]
+Season=Summer
+Year=2020
+Day=172
+Hours=15
+Minutes=00
+Seconds=00
+
+[SimVars.0]
+
+Latitude=N46° 32' 27.00"
+Longitude=W122° 26' 47.61"
+Altitude=+001201.11
+Pitch=0
+Bank=0
+Heading=115.68559831535446847
+PVelBodyAxis=0
+BVelBodyAxis=0
+HVelBodyAxis=0
+XVelBodyAxis=0
+YVelBodyAxis=0
+ZVelBodyAxis=800
+SimOnGround=False
+OnPlatformHeight=-9999999999
+
+[Engine Parameters.1.0]
+ThrottleLeverPct=1
+Pct Engine RPM=1
+Afterburner=6
+
+[Engine Parameters.2.0]
+ThrottleLeverPct=1
+Pct Engine RPM=1
+Afterburner=6
+
+[Slew.0]
+Active=False
+
+[Freeze.0]
+Location=False
+Altitude=False
+Attitude=False
+ 
+[FuelSystem.0]
+Tank.1=1
+Tank.2=0.95720565319061279297
+Tank.3=0.95742803812026977539
+Tank.4=1
+Tank.5=0.87210291624069213867
+Tank.6=0.87212491035461425781
+Valve.1=True
+Valve.2=True
+Valve.3=True
+Pump.1=1
+Pump.2=1
+Pump.3=1
+Pump.4=1
+Pump.5=1
+Pump.6=1
+Pump.7=1
+
+Center=100
+LeftMain=100
+RightMain=100
+LeftAux=100
+RightAux=100
+LeftTip=100
+RightTip=100
+Center 2=100
+Center 3=100
+External 1=00
+External 2=00
+
+[Payload.0]
+PayloadList= 170.0, 0.0,
+
+[Controls.0]
+FlapsHandle=000.00
+
+[Multiplayer]
+Status=0
+RadiusAlpha=50
+RadiusCreate=5000
+RadiusRemove=5500
+
+[AirTraffic]
+Status=0
+RadiusAlpha=50
+RadiusCreate=5000
+RadiusRemove=5500
+
+[TrafficManager]
+disable=True
+
+[Leaderboard]
+
+[GPS_Engine]
+Filename=01_LowAlt-RiffeLake
+position=N46° 27.66', W122° 7.25', +005105.60
+Time=75417
+TimeWP=75352
+ArriveTime=511
+CountWP=2
+NextWP=1
+WpInfo0=451, 0, 0, 0, 50152, 935.4, 0.0, 0.0
+WpInfo1=250, 0, 0, 0, 50360, 0.0, 159.3, 0.0
+
+[LocalVars.0]
+FA18_DDI_START_PAGE_2 = 7
+XMLVAR_AS04F_HUD_Alt_Selector=1
+
+[MusicSelection]
+MusicSelection=MUS_COLOR_04
+MusicSelectionTT=@asobo-mrk,TT:MENU.MRK

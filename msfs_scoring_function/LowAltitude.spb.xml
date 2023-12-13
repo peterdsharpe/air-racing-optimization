@@ -1,0 +1,1088 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<SimBase.Document Type="MissionFile" version="1,0">
+  <Title>Mission low altitude default</Title>
+  <Filename>LowAltitude.spb</Filename>
+  <WorldBase.Flight>
+    <SimMission.RacerCalculator id="RacerCalculator" InstanceId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <SimBase.Descr>RacerCalculator</SimBase.Descr>
+      <CalculatorParameterList>
+        <RacerParameter NameInFormula="CurrentSection" RacerParam="CurrentRacePoint" />
+        <RacerParameter NameInFormula="SectionCount" RacerParam="RacePointPerLap" />
+        <RacerParameter NameInFormula="RaceTime" RacerParam="RaceTime" />
+      </CalculatorParameterList>
+    </SimMission.RacerCalculator>
+    <SimMission.RaceInfo>
+      <SimBase.Descr>RaceInfo</SimBase.Descr>
+      <NumQualificationsLaps>0</NumQualificationsLaps>
+      <NumLaps>1</NumLaps>
+      <FinishWaitTime>30.000</FinishWaitTime>
+      <CountdownSeconds>0.000</CountdownSeconds>
+      <ClockStart>OnFirstRacePoint</ClockStart>
+      <RaceCourseActive>false</RaceCourseActive>
+      <LapDistance>7.911</LapDistance>
+    </SimMission.RaceInfo>
+    <SimMission.MissionLowAltitude InstanceId="{5066DDF9-784D-4752-BEEA-3D31383A9528}">
+      <SimBase.Descr>Mission Low Altitude Race</SimBase.Descr>
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <DisableToolbar>true</DisableToolbar>
+      <NeedReadyToFlyButton>false</NeedReadyToFlyButton>
+      <SuccessText>$$:MISSIONMESSAGE.MRK.LOWALT.SUCCESS</SuccessText>
+      <FailureText>$$:MISSIONMESSAGE.MRK.LOWALT.FAILED</FailureText>
+      <AbortedText>TT:MISSIONMESSAGE.ACTIVITY.ABORTED</AbortedText>
+      <RaceCourseReference>{53C65E91-1A35-4FE2-B90E-E50DDCDC0783}</RaceCourseReference>
+      <ProceduralRacePointCount>9</ProceduralRacePointCount>
+      <SimStateFilename>Missions/Asobo/MRK/LowAltitude/Default/BackOnTrack/SimState</SimStateFilename>
+      <EndScreens>
+        <EndScreenReference id="EndScreen" UniqueRefId="{85B13B99-F6AD-48AF-8162-4604852C57BE}" MissionState="MISSION_SUCCEEDED" />
+      </EndScreens>
+      <Parameters>
+        <Parameter ParameterName="CurrentSection" UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+          <ReferenceParameterName>CurrentSection</ReferenceParameterName>
+        </Parameter>
+        <Parameter ParameterName="SectionCount" UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+          <ReferenceParameterName>SectionCount</ReferenceParameterName>
+        </Parameter>
+        <Parameter ParameterName="TotalTime" UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+          <ReferenceParameterName>RaceTime</ReferenceParameterName>
+        </Parameter>
+        <Parameter ParameterName="TotalScore" UniqueRefId="{82CE694A-BD3C-4607-A130-8A7292294715}" />
+        <Parameter ParameterName="MeanAttitude" UniqueRefId="{727A7DF6-03A3-4C85-9F22-A58B609C1B5D}" />
+      </Parameters>
+      <Objectives>
+        <Objective id="Goal" UniqueRefId="{FACFCC1D-4639-4348-AD68-153D4E56E0D6}">
+          <Optional>false</Optional>
+          <SimBase.Descr>End the race</SimBase.Descr>
+          <SuccessText>Success</SuccessText>
+        </Objective>
+      </Objectives>
+      <Score>
+        <ScoreName>GlobalScore</ScoreName>
+        <ScoreParamScore>
+          <ScoreParam id="GlobalScore" UniqueRefId="{82CE694A-BD3C-4607-A130-8A7292294715}" Displayed="true" />
+        </ScoreParamScore>
+        <RankList>
+          <ScoreRank>
+            <MinValue>1.000</MinValue>
+            <IconName>Grade_C</IconName>
+          </ScoreRank>
+          <ScoreRank>
+            <MinValue>750000.000</MinValue>
+            <IconName>Grade_B</IconName>
+          </ScoreRank>
+          <ScoreRank>
+            <MinValue>1300000.000</MinValue>
+            <IconName>Grade_A</IconName>
+          </ScoreRank>
+        </RankList>
+      </Score>
+    </SimMission.MissionLowAltitude>
+    <SimMission.Goal id="Goal" InstanceId="{FACFCC1D-4639-4348-AD68-153D4E56E0D6}">
+      <SimBase.Descr>Goal</SimBase.Descr>
+      <SimBase.Text>Race to win!</SimBase.Text>
+    </SimMission.Goal>
+    <SimMission.GoalResolutionAction id="GoalResolutionAction" InstanceId="{D6B3D088-8C36-4E68-8A46-3F38D3BA610B}">
+      <SimBase.Descr>GoalResolutionAction</SimBase.Descr>
+      <Goals>
+        <WorldBase.ObjectReference id="Goal" InstanceId="{FACFCC1D-4639-4348-AD68-153D4E56E0D6}" />
+      </Goals>
+    </SimMission.GoalResolutionAction>
+    <SimMission.TimerTrigger>
+      <SimBase.Descr>StartTrigger</SimBase.Descr>
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <OneShot>true</OneShot>
+      <OnScreenTimer>true</OnScreenTimer>
+      <StartTime>0.000</StartTime>
+      <StopTime>0.000</StopTime>
+      <Actions>
+        <WorldBase.ObjectReference id="SetWwiseState_LowAltitude" InstanceId="{ADA77A92-70F0-4C6D-BF52-9A3EB8407FA1}" />
+        <WorldBase.ObjectReference id="Set_Music_SC_Attack_MINUS3" InstanceId="{C2EDF4DB-3AE3-42C9-B8F3-0310DCD7C8CC}" />
+        <WorldBase.ObjectReference id="Set_Music_SC_Hold_MINUS3" InstanceId="{4801FB6E-DA7C-4B6B-AB40-6A05FA328574}" />
+        <WorldBase.ObjectReference id="Set_Music_SC_Release_MINUS3" InstanceId="{3AE5527F-3F72-4A7D-B681-E6A042EAADCE}" />
+        <WorldBase.ObjectReference id="Set_Music_SC_Attack_MINUS6" InstanceId="{0F129E6A-B070-4A2D-AAEC-7B75C85C68BD}" />
+        <WorldBase.ObjectReference id="Set_Music_SC_Hold_MINUS6" InstanceId="{B0C2B324-C239-41E2-8167-80C134183168}" />
+        <WorldBase.ObjectReference id="Set_Music_SC_Release_MINUS6" InstanceId="{4F1CF4EF-B77D-4224-A239-40A7723ED812}" />
+      </Actions>
+    </SimMission.TimerTrigger>
+    <SimMission.OnEndLoadingTrigger id="EndLoadingTrigger" InstanceId="{0CA50642-655E-407F-8685-393A072F6A98}">
+      <SimBase.Descr>OnEndLoadingTrigger</SimBase.Descr>
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <FullLoadingActions>
+        <WorldBase.ObjectReference id="SetWwiseState_MFS_TRANSITION" InstanceId="{1E4103C0-CF38-4B28-8BF2-F1F65DDF2E38}" />
+        <WorldBase.ObjectReference id="StopLoading" InstanceId="{8B43AB4F-5950-47BB-8867-AE7ED4C06BFC}" />
+        <WorldBase.ObjectReference id="LoadingTransition" InstanceId="{8D3BAD48-03AA-440A-9764-E5CB345CA76B}" />
+        <WorldBase.ObjectReference id="MRK_AIRCRAFT_ATTENUATION_SOUND_TRANSITION_INTRO" InstanceId="{A6E9EB83-D301-4EB8-9014-29E65AEA7B78}" />
+        <WorldBase.ObjectReference id="Pause_2s" InstanceId="{B6D32E3B-2923-478D-96CE-25BB6C630296}" />
+        <WorldBase.ObjectReference id="StopTransition" InstanceId="{A2D480A7-0C03-4627-8F35-E3FCF7D15663}" />
+        <WorldBase.ObjectReference id="SetWwiseState_MFS_RTC_INTRO" InstanceId="{46286132-987E-4798-979F-B37A56513BCF}" />
+        <WorldBase.ObjectReference id="FlightState Low Altitude Race" InstanceId="{80E2EEDE-4C46-4AFD-BD05-23DFDA5F33C4}" />
+      </FullLoadingActions>
+      <RestartActions>
+        <WorldBase.ObjectReference id="SetWwiseState_MFS_RTC_INTRO" InstanceId="{46286132-987E-4798-979F-B37A56513BCF}" />
+        <WorldBase.ObjectReference id="FlightState Low Altitude Race" InstanceId="{80E2EEDE-4C46-4AFD-BD05-23DFDA5F33C4}" />
+      </RestartActions>
+    </SimMission.OnEndLoadingTrigger>
+    <SimMission.FlowEventAction InstanceId="{8B43AB4F-5950-47BB-8867-AE7ED4C06BFC}">
+      <SimBase.Descr>Stop loading</SimBase.Descr>
+      <FlowEvents>
+        <FlowEvent id="PREVENT_END_LOADING_FROM_SCRIPT" />
+        <FlowEvent id="DISABLE_FADE_AFTER_LOADING" />
+      </FlowEvents>
+    </SimMission.FlowEventAction>
+    <SimMission.TransitionAction id="LoadingTransition" InstanceId="{8D3BAD48-03AA-440A-9764-E5CB345CA76B}">
+      <TransitionTextBottom>@asobo-mrk,TT:MRK.TRANSITION.LOWALT_STARTED</TransitionTextBottom>
+      <TransitionLogo>/LowAltitude/assets/logo_maverick.png</TransitionLogo>
+      <TransitionBackgroundImage>/LowALtitude/assets/transition_background.jpg</TransitionBackgroundImage>
+      <TransitionArrowColor>#881817</TransitionArrowColor>
+      <TransitionLaunchSound>mrk_motion_intro</TransitionLaunchSound>
+      <TransitionFinishSound>mrk_motion_outro</TransitionFinishSound>
+      <TransitionFadeInEvent>AUTHORIZE_END_LOADING_FROM_SCRIPT</TransitionFadeInEvent>
+      <EndTransitionOnEvent>LEAVE_TRANSITION_START</EndTransitionOnEvent>
+      <UIComponents.UIComponent id="ActivityTransition" />
+    </SimMission.TransitionAction>
+    <SimMission.FlowEventAction InstanceId="{A2D480A7-0C03-4627-8F35-E3FCF7D15663}">
+      <SimBase.Descr>FlowEvent_EndIntro</SimBase.Descr>
+      <FlowEvents>
+        <FlowEvent id="ENABLE_FADE_AFTER_LOADING" />
+        <FlowEvent id="LEAVE_TRANSITION_START" />
+      </FlowEvents>
+    </SimMission.FlowEventAction>
+    <SimMission.FlowStateAction InstanceId="{80E2EEDE-4C46-4AFD-BD05-23DFDA5F33C4}">
+      <FlowStateName>RACE_LOWALTITUDE</FlowStateName>
+      <FromSpawn>true</FromSpawn>
+      <IsFirstStateInTimeline>true</IsFirstStateInTimeline>
+      <TeleportFlowEvents>
+        <FlowEvent id="SHOW_MISSION_STARTUP" />
+        <FlowEvent id="ATC_STOP" />
+        <FlowEvent id="UNPAUSE_SIM" />
+      </TeleportFlowEvents>
+      <StartActions>
+        <WorldBase.ObjectReference id="MRK_AIRCRAFT_ATTENUATION_SOUND_RTC_INTRO" InstanceId="{0BF6D783-64D4-4C4C-8702-264E6DF9B8B0}" />
+        <WorldBase.ObjectReference id="RTC_Introduction" InstanceId="{6A7BB05B-AE2D-48ED-9584-39503B87A15F}" />
+        <WorldBase.ObjectReference id="Intro end" InstanceId="{7628B592-EB68-434D-ACDE-AA4907F7D3EB}" />
+        <WorldBase.ObjectReference id="RaceCourseActivateAction" InstanceId="{A5ED712F-8734-4161-B6B9-5C8E36E0AC10}" />
+        <WorldBase.ObjectReference id="ActivateOutOfAreaWatcherStartEnd" InstanceId="{609E382D-DFEA-4C33-8D04-595306018B12}" />
+        <WorldBase.ObjectReference id="SetWwiseState_MFS_INGAME_01" InstanceId="{7A9AAD63-7CE2-468F-A6F2-4C36943DB66B}" />
+        <WorldBase.ObjectReference id="MRK_AIRCRAFT_ATTENUATION_SOUND_INGAME" InstanceId="{DF003D5C-2D59-44CB-BF51-F18E41B2E5B3}" />
+        <WorldBase.ObjectReference id="MRK_HEADSET_SFX_ATTENUATION_Ingame" InstanceId="{9EBC0461-AAA8-4BCC-AC37-817544AB26DB}" />
+      </StartActions>
+      <StartFlowEvents>
+        <FlowEvent id="HIDE_MISSION_STARTUP" />
+        <FlowEvent id="PANEL_ATC_HIDE" />
+        <FlowEvent id="ATC_MUTE" />
+        <FlowEvent id="PANEL_ATC_FORCE_DISABLED" />
+        <FlowEvent id="PANEL_CHECKLIST_FORCE_DISABLED" />
+        <FlowEvent id="PANEL_FUEL_PAYLOAD_FORCE_DISABLED" />
+        <FlowEvent id="PANEL_GAME_NAVLOG_FORCE_DISABLED" />
+        <FlowEvent id="PANEL_VFR_MAP_FORCE_DISABLED" />
+        <FlowEvent id="PANEL_TELEPORT_FORCE_DISABLED" />
+        <FlowEvent id="PANEL_REPLAY_FORCE_DISABLED" />
+        <FlowEvent id="PANEL_COPILOT_FORCE_DISABLED" />
+        <FlowEvent id="PANEL_OBJECTIVES_FORCE_DISABLED" />
+        <FlowEvent id="PANEL_CONTROLS_HIDE" />
+        <FlowEvent id="PANEL_CAMERAS_HIDE" />
+      </StartFlowEvents>
+      <EventTriggersFiles>
+        <EventTriggersFile id="missions\Asobo\MRK\LowAltitude\Default\EventTriggersLowAltitude" />
+      </EventTriggersFiles>
+    </SimMission.FlowStateAction>
+    <SimMission.RTCSequencer InstanceId="{6A7BB05B-AE2D-48ED-9584-39503B87A15F}">
+      <SimBase.Descr>RTC_Introduction</SimBase.Descr>
+      <NeedPreload>true</NeedPreload>
+      <LoopAnimation>false</LoopAnimation>
+      <Shuffle>false</Shuffle>
+      <Immediate>false</Immediate>
+      <Actions>
+        <WorldBase.ObjectReference id="IntroductionReplay" InstanceId="{68CEEFD5-9416-4214-A5DD-B55CDB413813}" />
+      </Actions>
+    </SimMission.RTCSequencer>
+    <SimMission.PlayReplayAction InstanceId="{68CEEFD5-9416-4214-A5DD-B55CDB413813}">
+      <SimBase.Descr>IntroductionReplay</SimBase.Descr>
+      <SimBase.Filename>Intro.ReplayDesc</SimBase.Filename>
+      <Immediate>false</Immediate>
+      <DefinedReplayPosition>ReachOnEnd</DefinedReplayPosition>
+      <ReplayBookmarkIn>0</ReplayBookmarkIn>
+      <ReplayBookmarkOut>4</ReplayBookmarkOut>
+      <WorldBase.AttachedWorldObject>
+        <ObjectReference InstanceId="{1CCF6D89-BA36-445F-B5C8-47571ABC0773}" />
+      </WorldBase.AttachedWorldObject>
+    </SimMission.PlayReplayAction>
+    <SimMission.FlowEventAction InstanceId="{7628B592-EB68-434D-ACDE-AA4907F7D3EB}">
+      <SimBase.Descr>Intro end</SimBase.Descr>
+      <FlowEvents>
+        <FlowEvent id="MRK_LOWALT_FINISH_REPLAY_INTRODUCTION" />
+      </FlowEvents>
+    </SimMission.FlowEventAction>
+    <SimMission.RaceCourseActivateAction InstanceId="{A5ED712F-8734-4161-B6B9-5C8E36E0AC10}">
+      <SimBase.Descr>RaceCourseActivateAction</SimBase.Descr>
+    </SimMission.RaceCourseActivateAction>
+    <SimMission.FlowEventTrigger>
+      <SimBase.Descr>EventTriggerRaceStarts</SimBase.Descr>
+      <OneShot>true</OneShot>
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <FlowEvents>
+        <FlowEvent id="CHAIN_MISSION_RACE_STARTED" />
+      </FlowEvents>
+      <Actions>
+        <WorldBase.ObjectReference id="Ghost_record_action" InstanceId="{6A52B3A3-903C-4CA8-B002-C9E716B2AB96}" />
+        <WorldBase.ObjectReference id="Ghost_Play_action" InstanceId="{8E20F050-780C-4BBC-B73E-CCFA93E68CD8}" />
+        <WorldBase.ObjectReference id="GhostCalculator" InstanceId="{49A1546C-4EA0-492B-857B-3AEE22D0BEDF}" />
+        <WorldBase.ObjectReference id="ActivateCalculators" InstanceId="{F2ED063B-E273-4C90-886B-F5E9BB843D81}" />
+      </Actions>
+    </SimMission.FlowEventTrigger>
+    <SimMission.RecordReplayAction InstanceId="{6A52B3A3-903C-4CA8-B002-C9E716B2AB96}">
+      <SimBase.Descr>Ghost_record_action</SimBase.Descr>
+      <ReplayType>Ghost</ReplayType>
+      <ReplaySubject>Ghost</ReplaySubject>
+      <Immediate>true</Immediate>
+      <MaxRecordedTime>720.000</MaxRecordedTime>
+    </SimMission.RecordReplayAction>
+    <SimMission.PlayGhostAction InstanceId="{8E20F050-780C-4BBC-B73E-CCFA93E68CD8}">
+      <SimBase.Descr>Ghost_Play_action</SimBase.Descr>
+      <Immediate>true</Immediate>
+      <GhostAlpha>0.660</GhostAlpha>
+      <GhostNameplate>@asobo-mrk,TT:HUD.GHOST_NAME</GhostNameplate>
+    </SimMission.PlayGhostAction>
+    <SimMission.ObjectActivationAction id="Activate:GhostCalculator" InstanceId="{49A1546C-4EA0-492B-857B-3AEE22D0BEDF}">
+      <SimBase.Descr>Activate:GhostCalculator</SimBase.Descr>
+      <WorldBase.ObjectReferenceList>
+        <ObjectReference id="GhostCalculator" InstanceId="{46167D86-C2B1-47D8-9DFE-6FA3675C3CFB}" />
+      </WorldBase.ObjectReferenceList>
+    </SimMission.ObjectActivationAction>
+    <SimMission.GhostCalculator id="GhostCalculator" InstanceId="{46167D86-C2B1-47D8-9DFE-6FA3675C3CFB}" StartValue="0.000">
+      <SimBase.Descr>GhostCalculator</SimBase.Descr>
+      <WorldBase.Activated>false</WorldBase.Activated>
+      <MinTimeStamp>5.000</MinTimeStamp>
+      <RecordReference id="Ghost_record_action" UniqueRefId="{6A52B3A3-903C-4CA8-B002-C9E716B2AB96}" />
+      <PlayReference id="Ghost_Play_action" UniqueRefId="{8E20F050-780C-4BBC-B73E-CCFA93E68CD8}" />
+      <CalculatorParameterList>
+        <GhostKeyValueParameter NameInFormula="GhostSectionTime" DataName="SectionTime" KeyPrefix="Section|">
+          <KeyReference UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+            <ReferenceParameterName>CurrentSection</ReferenceParameterName>
+          </KeyReference>
+        </GhostKeyValueParameter>
+        <GhostKeyValueParameter NameInFormula="PlayerSectionTime" DataName="SectionTime" KeyPrefix="Section|">
+          <KeyReference UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+            <ReferenceParameterName>CurrentSection</ReferenceParameterName>
+          </KeyReference>
+          <SavedValueReference UniqueRefId="{05E5A2FA-DAB3-433A-86C5-B00D431E10D4}" />
+        </GhostKeyValueParameter>
+        <GhostKeyValueParameter NameInFormula="GhostSectionMeanAltitude" DataName="SectionMeanAltitude" KeyPrefix="Section|">
+          <KeyReference UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+            <ReferenceParameterName>CurrentSection</ReferenceParameterName>
+          </KeyReference>
+        </GhostKeyValueParameter>
+        <GhostKeyValueParameter NameInFormula="PlayerSectionMeanAltitude" DataName="SectionMeanAltitude" KeyPrefix="Section|">
+          <KeyReference UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+            <ReferenceParameterName>CurrentSection</ReferenceParameterName>
+          </KeyReference>
+          <SavedValueReference UniqueRefId="{727A7DF6-03A3-4C85-9F22-A58B609C1B5D}" />
+        </GhostKeyValueParameter>
+        <GhostKeyValueParameter NameInFormula="GhostSectionBaseScore" DataName="SectionBaseScore" KeyPrefix="Section|">
+          <KeyReference UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+            <ReferenceParameterName>CurrentSection</ReferenceParameterName>
+          </KeyReference>
+        </GhostKeyValueParameter>
+        <GhostKeyValueParameter NameInFormula="PlayerSectionBaseScore" DataName="SectionBaseScore" KeyPrefix="Section|">
+          <KeyReference UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+            <ReferenceParameterName>CurrentSection</ReferenceParameterName>
+          </KeyReference>
+          <SavedValueReference UniqueRefId="{96F7FC71-A416-4D8C-87DD-86ADF7CA6878}" />
+        </GhostKeyValueParameter>
+        <GhostKeyValueParameter NameInFormula="GhostSectionScoreMultiplier" DataName="SectionScoreMultiplier" KeyPrefix="Section|">
+          <KeyReference UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+            <ReferenceParameterName>CurrentSection</ReferenceParameterName>
+          </KeyReference>
+        </GhostKeyValueParameter>
+        <GhostKeyValueParameter NameInFormula="PlayerSectionScoreMultiplier" DataName="SectionScoreMultiplier" KeyPrefix="Section|">
+          <KeyReference UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+            <ReferenceParameterName>CurrentSection</ReferenceParameterName>
+          </KeyReference>
+          <SavedValueReference UniqueRefId="{1E8F4254-1460-4513-8688-07076959A440}" />
+        </GhostKeyValueParameter>
+        <GhostKeyValueParameter NameInFormula="GhostSectionScore" DataName="SectionScore" KeyPrefix="Section|">
+          <KeyReference UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+            <ReferenceParameterName>CurrentSection</ReferenceParameterName>
+          </KeyReference>
+        </GhostKeyValueParameter>
+        <GhostKeyValueParameter NameInFormula="PlayerSectionScore" DataName="SectionScore" KeyPrefix="Section|">
+          <KeyReference UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+            <ReferenceParameterName>CurrentSection</ReferenceParameterName>
+          </KeyReference>
+          <SavedValueReference UniqueRefId="{AA0FC624-D845-4515-9A0F-96D43F2A095F}" />
+        </GhostKeyValueParameter>
+      </CalculatorParameterList>
+    </SimMission.GhostCalculator>
+    <SimMission.VolumeRacePoint InstanceId="{85D6E33A-C84F-4B63-90AF-FEE8BD9B3054}">
+      <SimBase.Descr>VolumeRacePointEndRace</SimBase.Descr>
+      <Areas>
+        <WorldBase.ObjectReference id="AreaEndCourse" InstanceId="{103E75E5-BCC7-4527-9B73-B81E119A52C3}" />
+      </Areas>
+      <OnEnterActions>
+        <WorldBase.ObjectReference id="DeActivateOutOfAreaWatcherStartEnd" InstanceId="{3B9CA4B5-4621-4655-8579-439C0E99BB3A}" />
+        <WorldBase.ObjectReference id="DeActivateCalculators" InstanceId="{91F7FF74-215B-49A6-A811-A692B0254248}" />
+        <WorldBase.ObjectReference id="SetWwiseState_MFS_RTC_OUTRO" InstanceId="{3633BEE8-62B1-44F6-8703-EEF57A1BE8C7}" />
+        <WorldBase.ObjectReference id="MRK_AIRCRAFT_ATTENUATION_SOUND_RTC_OUTRO" InstanceId="{A00F3D4D-6DD5-4F25-984C-8B49EA7D8A75}" />
+        <WorldBase.ObjectReference id="MRK_HEADSET_SFX_ATTENUATION_RTC_OUTRO" InstanceId="{EAB13272-D0DF-41B3-988F-E8B22C396114}" />
+        <WorldBase.ObjectReference id="Pause_1s" InstanceId="{CCADFA69-1533-47D7-8831-6C3CCDAFCC92}" />
+        <WorldBase.ObjectReference id="RTC_End" InstanceId="{B5ADACAE-C473-4E1E-B5CF-75E2F668EBA5}" />
+        <WorldBase.ObjectReference id="Pause_3s" InstanceId="{9261A372-8B1A-47A3-B578-C89518068549}" />
+        <WorldBase.ObjectReference id="EndTransition" InstanceId="{0C02C4DD-A6DF-4542-9F62-CEA99CA0940A}" />
+        <WorldBase.ObjectReference id="MRK_AIRCRAFT_ATTENUATION_SOUND_TRANSITION_OUTRO" InstanceId="{D327E372-9392-4B27-BC8E-B7BC5E68DF93}" />
+      </OnEnterActions>
+    </SimMission.VolumeRacePoint>
+    <SimMission.RTCSequencer InstanceId="{B5ADACAE-C473-4E1E-B5CF-75E2F668EBA5}">
+      <SimBase.Descr>RTC_End</SimBase.Descr>
+      <NeedPreload>true</NeedPreload>
+      <LoopAnimation>false</LoopAnimation>
+      <Shuffle>false</Shuffle>
+      <Immediate>false</Immediate>
+      <Actions>
+        <WorldBase.ObjectReference id="EndReplay" InstanceId="{69740FB7-80C0-4A84-9199-26794554DEC3}" />
+      </Actions>
+    </SimMission.RTCSequencer>
+    <SimMission.PlayReplayAction InstanceId="{69740FB7-80C0-4A84-9199-26794554DEC3}">
+      <SimBase.Descr>EndReplay</SimBase.Descr>
+      <SimBase.Filename>Outro.ReplayDesc</SimBase.Filename>
+      <Immediate>true</Immediate>
+      <DefinedReplayPosition>ReachOnStart</DefinedReplayPosition>
+      <ReplayBookmarkIn>0</ReplayBookmarkIn>
+      <ReplayBookmarkOut>1</ReplayBookmarkOut>
+      <IgnorePitchBank>true</IgnorePitchBank>
+      <WorldBase.AttachedWorldObject>
+        <AltitudeAGL>200.000</AltitudeAGL>
+        <ObjectReference />
+      </WorldBase.AttachedWorldObject>
+    </SimMission.PlayReplayAction>
+    <SimMission.TransitionAction InstanceId="{0C02C4DD-A6DF-4542-9F62-CEA99CA0940A}">
+      <TransitionTextBottom>@asobo-mrk,TT:MRK.TRANSITION.LOWALT_FINISHED</TransitionTextBottom>
+      <TransitionLogo>/LowAltitude/assets/logo_maverick.png</TransitionLogo>
+      <TransitionBackgroundImage>/LowALtitude/assets/transition_background.jpg</TransitionBackgroundImage>
+      <TransitionArrowColor>#881817</TransitionArrowColor>
+      <TransitionLaunchSound>mrk_motion_intro</TransitionLaunchSound>
+      <TransitionFinishSound>mrk_motion_outro</TransitionFinishSound>
+      <TransitionFadeInEvent>MRK_LOWALT_FINISH_TRANSITION_FADED_IN</TransitionFadeInEvent>
+      <EndTransitionOnEvent>OUTRO</EndTransitionOnEvent>
+      <UIComponents.UIComponent id="ActivityTransition" />
+    </SimMission.TransitionAction>
+    <SimMission.FlowEventTrigger>
+      <SimBase.Descr>EventTriggerEndTransitionFadeIn</SimBase.Descr>
+      <OneShot>true</OneShot>
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <FlowEvents>
+        <FlowEvent id="MRK_LOWALT_FINISH_TRANSITION_FADED_IN" />
+      </FlowEvents>
+      <Actions>
+        <WorldBase.ObjectReference id="GoalResolutionAction" InstanceId="{D6B3D088-8C36-4E68-8A46-3F38D3BA610B}" />
+        <WorldBase.ObjectReference id="MissionScoreToLeaderboardAction" InstanceId="{3A55CA74-06D5-4B83-9B2E-AA7A63B1F998}" />
+        <WorldBase.ObjectReference id="SetWwiseState_MFS_REWARD_SCREEN" InstanceId="{AE2CD6AF-0BD0-480B-9B8A-82C6C37BC919}" />
+      </Actions>
+    </SimMission.FlowEventTrigger>
+    <SimMission.MissionScoreToLeaderboardAction InstanceId="{3A55CA74-06D5-4B83-9B2E-AA7A63B1F998}" />
+    <SimMission.FlowStateAction InstanceId="{C7DEDA1E-FD6D-43E7-9654-9A08958275E7}">
+      <FlowStateName>OUTRO</FlowStateName>
+    </SimMission.FlowStateAction>
+    <SimTemplate.UseTemplate TemplateId="{F52F44E7-C742-49AB-BEF3-3D42E9DAB8CF}" InstanceId="{DB2A33EE-0917-41F8-AAEB-23FD1F8189E7}">
+      <SimBase.Descr>PANEL_FLIGHTOBJECT</SimBase.Descr>
+      <SimMission.InGamePanel id="FlightObjectPanel" InstanceId="{8BF2CB7D-7761-420F-A707-B1B09202A48A}">
+        <WorldBase.Activated>false</WorldBase.Activated>
+      </SimMission.InGamePanel>
+    </SimTemplate.UseTemplate>
+    <SimMission.InGamePanel id="PANEL_RACELOWALTHUD" InstanceId="{8BF2CB7D-7761-420F-A707-B1B09202A48A}" Name="" url="coui://html_ui/vfs/missions/Asobo/MRK/LowAltitude/Default/Panels/RaceLowAltHUD/RaceLowAltHUD.html" TagName="race-lowalt-hud" resizeDirections="None" minWidth="45.000" minHeight="20.000" defaultWidth="45.000" defaultHeight="20.000" defaultTop="4.000" defaultRight="4.000" icon="coui://html_ui/vfs/missions/Asobo/MRK/LowAltitude/Default/Panels/RaceLowAltHUD/RaceLowAltHUD.svg" buttonVisible="false" collapsible="false" headerVisible="false" noBackground="true" managedByToolbar="false" isPanelCloseable="false" hasDefaultVRPosition="true" defaultVRSpaceX="-0.334" defaultVRSpaceY="0.216" defaultVRSpaceZ="0.604" defaultVRSpaceQuatX="-0.212" defaultVRSpaceQuatY="-0.216" defaultVRSpaceQuatZ="-0.048" defaultVRSpaceQuatW="0.952">
+      <WorldBase.Activated>true</WorldBase.Activated>
+    </SimMission.InGamePanel>
+    <SimMission.InGamePanel id="PANEL_RACELOWALTHUD_NOTIFICATION" InstanceId="{D194B252-B986-42BD-A0CC-B7173392F2C1}" Name="" url="coui://html_ui/vfs/missions/Asobo/MRK/LowAltitude/Default/Panels/RaceLowAltHUDNotification/RaceLowAltHUDNotification.html" TagName="race-lowalt-hud-notification" resizeDirections="None" minWidth="48.000" minHeight="60.000" defaultWidth="48.000" defaultHeight="60.000" defaultTop="4.000" HAnchor="CENTER" collideInGameMarkers="false" defaultLeft="-24.000" buttonVisible="false" collapsible="false" headerVisible="false" noBackground="true" managedByToolbar="false" isPanelCloseable="false" hasDefaultVRPosition="true" defaultVRSpaceX="0.000" defaultVRSpaceY="0.227" defaultVRSpaceZ="0.604" defaultVRSpaceQuatX="-0.179" defaultVRSpaceQuatY="0.000" defaultVRSpaceQuatZ="0.000" defaultVRSpaceQuatW="0.984">
+      <WorldBase.Activated>true</WorldBase.Activated>
+    </SimMission.InGamePanel>
+    <SimEndScreen.EndScreen id="EndScreen" InstanceId="{85B13B99-F6AD-48AF-8162-4604852C57BE}" ActivitiesMenuTitle="@asobo-mrk,TT:MENU.MAVERICK_ACTIVITIES" NextActivityButtonTitle="TT:MENU.ACTIVITY_LANDINGCHALLENGE_NEXT" ScreenLogo="vfs://missions/Common/REWARD/LandingChallenge/logo.svg">
+      <SimBase.Title>TT:MENU.REWARD.SUCCESS.TITLE</SimBase.Title>
+      <SimBase.Descr>TT:MENU.REWARD.SUCCESS.DESC</SimBase.Descr>
+      <ScreenButtonList>
+        <ScreenButton FlowEvent="GO_TO_ENDLEVEL_WORLDMAP_ACTIVITY">
+          <SimBase.Title>TT:MENU.REWARDSCREEN.RESTART</SimBase.Title>
+        </ScreenButton>
+        <ScreenButton FlowEvent="SHOW_ACTIVITY_MENU">
+          <SimBase.Title>@asobo-mrk,TT:MENU.MAVERICK_ACTIVITIES</SimBase.Title>
+        </ScreenButton>
+        <ScreenButton PopUpEvent="ASK_BACKTO_MAINMENU_FROMENDLEVEL" PopUpText="TT:MENU.WARNING_BACK_TO_MAINMENU">
+          <SimBase.Title>TT:MENU.REWARDSCREEN.BACKTO_MAIN</SimBase.Title>
+        </ScreenButton>
+      </ScreenButtonList>
+      <ScreenPageList>
+        <ScreenPage PageID="LOW_ALTITUDE_OVERVIEW_SCREEN">
+          <SimBase.Title>TT:MENU.REWARDSCREEN.LOW_ALTITUDE</SimBase.Title>
+          <PageElementList>
+            <PageElement>
+              <SimBase.Title>
+              </SimBase.Title>
+              <ElementType>EOMScoreOverview</ElementType>
+            </PageElement>
+          </PageElementList>
+        </ScreenPage>
+        <ScreenPage PageID="LOW_ALTITUDE_LOGBOOK_SCREEN">
+          <SimBase.Title>TT:MENU.REWARDSCREEN.LOGBOOK</SimBase.Title>
+          <PageElementList>
+            <PageElement>
+              <SimBase.Title>@asobo-lowalt-base,TT:MENU.REWARDSCREEN.LOW_ALTITUDE.SECTION_DETAILS</SimBase.Title>
+              <ElementType>EOMLowAltScoringDetails</ElementType>
+            </PageElement>
+            <PageElement>
+              <SimBase.Title>TT:MENU.PROFILE_LEADERBOARD</SimBase.Title>
+              <ElementType>EOMLeaderBoard</ElementType>
+            </PageElement>
+            <PageElement>
+              <SimBase.Title>TT:MENU.PROFILE_LOGBOOK</SimBase.Title>
+              <ElementType>EOMLogBook</ElementType>
+            </PageElement>
+          </PageElementList>
+        </ScreenPage>
+      </ScreenPageList>
+    </SimEndScreen.EndScreen>
+    <SimMission.Player InstanceId="{41D3F258-52EC-40B5-92A3-D7FA8CC87E30}">
+      <SimBase.Descr>MainPlayer</SimBase.Descr>
+      <WorldBase.WorldPosition>N36° 23' 40.13",W117° 59' 34.04",+000600.00</WorldBase.WorldPosition>
+      <WorldBase.AltitudeIsAGL>true</WorldBase.AltitudeIsAGL>
+      <WorldBase.Orientation>0.000,0.000,102.000</WorldBase.Orientation>
+      <WorldBase.IsOnGround>false</WorldBase.IsOnGround>
+      <WorldBase.ContainerTitle>P51 Racer 5</WorldBase.ContainerTitle>
+      <Name>Race 1</Name>
+      <RacerData>
+        <WorldBase.ObjectReference id="RaceCourse" InstanceId="{53C65E91-1A35-4FE2-B90E-E50DDCDC0783}" />
+      </RacerData>
+    </SimMission.Player>
+    <SimMission.FlowEventTrigger InstanceId="{798ECB90-38AA-40A7-83AC-9159594CC3E6}">
+      <SimBase.Descr>Event Trigger Leaving Area</SimBase.Descr>
+      <OneShot>false</OneShot>
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <FlowEvents>
+        <FlowEvent id="RACECOURSE_ENTERED_LEAVING_WARNING_ZONE" />
+      </FlowEvents>
+      <Actions>
+        <WorldBase.ObjectReference id="ACTNotif_LeavingArea" InstanceId="{D8295661-D0B6-42ED-BF32-E06FE6FB2B5E}" />
+      </Actions>
+    </SimMission.FlowEventTrigger>
+    <SimMission.EventTriggerActivationAction id="ACTNotif_LeavingArea" InstanceId="{D8295661-D0B6-42ED-BF32-E06FE6FB2B5E}">
+      <SimBase.Descr>Leaving Area</SimBase.Descr>
+      <NewObjectState>true</NewObjectState>
+      <EventTriggers>
+        <EventTrigger id="EVENT_TRIGGER_LEAVING_AREA" />
+      </EventTriggers>
+    </SimMission.EventTriggerActivationAction>
+    <SimMission.FlowEventTrigger InstanceId="{3C760D97-7A6D-4A7D-85D8-3B9D627FD517}">
+      <SimBase.Descr>Event Trigger Leaving Area</SimBase.Descr>
+      <OneShot>false</OneShot>
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <FlowEvents>
+        <FlowEvent id="RACECOURSE_LEFT_LEAVING_WARNING_ZONE" />
+      </FlowEvents>
+      <Actions>
+        <WorldBase.ObjectReference id="DACTNotif_LeavingArea" InstanceId="{55198B70-1C8F-49C2-8C43-CEFA9E6BE858}" />
+      </Actions>
+    </SimMission.FlowEventTrigger>
+    <SimMission.EventTriggerActivationAction id="DACTNotif_LeavingArea" InstanceId="{55198B70-1C8F-49C2-8C43-CEFA9E6BE858}">
+      <SimBase.Descr>Leaving Area</SimBase.Descr>
+      <NewObjectState>false</NewObjectState>
+      <EventTriggers>
+        <EventTrigger id="EVENT_TRIGGER_LEAVING_AREA" />
+      </EventTriggers>
+    </SimMission.EventTriggerActivationAction>
+    <SimMission.InGameMarker id="marker" InstanceId="{D65C5A57-9AA6-45EE-B7B8-D538C9484657}">
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <MinimumAltitude>1000.000</MinimumAltitude>
+      <MinDisplayDistance>500.000</MinDisplayDistance>
+      <MinDisplayDistanceFade>1500.000</MinDisplayDistanceFade>
+      <IGMAltitudeType>FromReliefAhead</IGMAltitudeType>
+      <Default2DParams>
+        <InGameMarkerTemplate2D>
+          <SimBaseUI.Visible>true</SimBaseUI.Visible>
+          <NeedIcon>false</NeedIcon>
+          <WorldBase.Scale>0.500</WorldBase.Scale>
+          <ClampType>Rectangle</ClampType>
+          <ClampSize>0.500</ClampSize>
+          <LookAtTarget>Ground</LookAtTarget>
+          <MainText>
+            <SimBase.Text>@asobo-lowalt-base,TT:HUD.LOWALT_GOAL</SimBase.Text>
+            <TextType>Text</TextType>
+            <TextColorStr>COLOR_WHITE</TextColorStr>
+          </MainText>
+        </InGameMarkerTemplate2D>
+      </Default2DParams>
+      <Default3DParams>
+        <InGameMarkerTemplate3D>
+          <SimBaseUI.Visible>true</SimBaseUI.Visible>
+          <NeedIcon>false</NeedIcon>
+          <VerticalLine>true</VerticalLine>
+          <WorldBase.Scale>1.000</WorldBase.Scale>
+          <VerticalLineWidth>2.000</VerticalLineWidth>
+          <BackGroundColorLower>COLOR_NONE</BackGroundColorLower>
+          <BackGroundColorUpper>COLOR_WHITE</BackGroundColorUpper>
+          <htmlTemplateName>race-lowalt-finish-line</htmlTemplateName>
+          <htmlUrl>coui://html_ui/vfs/missions/Asobo/MRK/LowAltitude/Default/IGM/LowaltHUDWaypoint/FinishLine.html</htmlUrl>
+          <MainText>
+            <SimBase.Text>@asobo-lowalt-base,TT:HUD.LOWALT_GOAL</SimBase.Text>
+            <TextType>Text</TextType>
+            <TextColorStr>COLOR_WHITE</TextColorStr>
+          </MainText>
+          <SecondaryText>
+            <TextType>Distance</TextType>
+            <TextColorStr>COLOR_WHITE</TextColorStr>
+          </SecondaryText>
+        </InGameMarkerTemplate3D>
+      </Default3DParams>
+      <WorldBase.AttachedWorldObject>
+        <ObjectReference id="AreaEndCourse" InstanceId="{103E75E5-BCC7-4527-9B73-B81E119A52C3}" />
+      </WorldBase.AttachedWorldObject>
+    </SimMission.InGameMarker>
+    <SimMission.PointOfInterest InstanceId="{FD0F68D5-0853-4E12-B205-B0EA62836177}">
+      <SimBase.Descr>POI-Goal</SimBase.Descr>
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <TargetName>GoalPOI</TargetName>
+      <WorldBase.AttachedWorldObject>
+        <ObjectReference id="AreaEndCourse" InstanceId="{103E75E5-BCC7-4527-9B73-B81E119A52C3}" />
+      </WorldBase.AttachedWorldObject>
+    </SimMission.PointOfInterest>
+    <SimMission.ObjectActivationAction id="ActivateCalculators" InstanceId="{F2ED063B-E273-4C90-886B-F5E9BB843D81}">
+      <NewObjectState>true</NewObjectState>
+      <WorldBase.ObjectReferenceList>
+        <ObjectReference id="RaceTime" InstanceId="{C5C67F04-E29A-4142-95B5-F4FBB42436D3}" />
+        <ObjectReference id="CurrentSection" InstanceId="{4317D4B9-6E4B-4124-92A3-44618FDEC843}" />
+        <ObjectReference id="SectionChangeTick" InstanceId="{7B522309-83BF-4F47-BACB-0879A78B6CD6}" />
+        <ObjectReference id="SectionTime" InstanceId="{05E5A2FA-DAB3-433A-86C5-B00D431E10D4}" />
+        <ObjectReference id="SectionAverageAltitude" InstanceId="{727A7DF6-03A3-4C85-9F22-A58B609C1B5D}" />
+        <ObjectReference id="SectionBaseScore" InstanceId="{96F7FC71-A416-4D8C-87DD-86ADF7CA6878}" />
+        <ObjectReference id="SectionScoreMultiplier" InstanceId="{1E8F4254-1460-4513-8688-07076959A440}" />
+        <ObjectReference id="SectionScore" InstanceId="{AA0FC624-D845-4515-9A0F-96D43F2A095F}" />
+        <ObjectReference id="GlobalScore" InstanceId="{82CE694A-BD3C-4607-A130-8A7292294715}" />
+      </WorldBase.ObjectReferenceList>
+    </SimMission.ObjectActivationAction>
+    <SimMission.ObjectActivationAction id="DeActivateCalculators" InstanceId="{91F7FF74-215B-49A6-A811-A692B0254248}">
+      <NewObjectState>false</NewObjectState>
+      <WorldBase.ObjectReferenceList>
+        <ObjectReference id="RaceTime" InstanceId="{C5C67F04-E29A-4142-95B5-F4FBB42436D3}" />
+      </WorldBase.ObjectReferenceList>
+    </SimMission.ObjectActivationAction>
+    <SimMission.Calculator id="RaceTime" InstanceId="{C5C67F04-E29A-4142-95B5-F4FBB42436D3}" StartValue="0.000">
+      <SimBase.Descr>Race Time</SimBase.Descr>
+      <WorldBase.Activated>false</WorldBase.Activated>
+      <CalculatorFormula>
+				(X:RaceTime)
+			</CalculatorFormula>
+      <CalculatorParameterList>
+        <ReferenceParameter NameInFormula="RaceTime" UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+          <ReferenceParameterName>RaceTime</ReferenceParameterName>
+        </ReferenceParameter>
+      </CalculatorParameterList>
+    </SimMission.Calculator>
+    <SimMission.Calculator id="CurrentSection" InstanceId="{4317D4B9-6E4B-4124-92A3-44618FDEC843}" StartValue="0.000">
+      <WorldBase.Activated>false</WorldBase.Activated>
+      <CalculatorFormula>
+				(X:SectionChangeTimer) 1 == if{
+						(X:result)
+						1
+					+
+				} els{
+					(X:result)
+				}
+			</CalculatorFormula>
+      <CalculatorParameterList>
+        <ReferenceParameter NameInFormula="SectionRace" UniqueRefId="{985A704E-A2F4-4AB0-80D7-9B6ADD9AEF4E}">
+          <ReferenceParameterName>CurrentSection</ReferenceParameterName>
+        </ReferenceParameter>
+        <FormulaParameter NameInFormula="PreviousSection" StartValue="0.000">
+          <CalculatorFormula>
+								(X:PreviousSection)
+								(X:SectionRace)
+							!=
+						(&gt;X:Tick)
+						(X:SectionRace)
+					</CalculatorFormula>
+        </FormulaParameter>
+        <FormulaParameter NameInFormula="Tick" StartValue="0.000" />
+        <FormulaParameter NameInFormula="SectionChangeTimer" StartValue="0.000">
+          <CalculatorFormula>
+						(X:Tick) if{
+							2
+						} els{
+									(X:SectionChangeTimer)
+									1
+								-
+								0
+							max
+						}
+					</CalculatorFormula>
+        </FormulaParameter>
+      </CalculatorParameterList>
+    </SimMission.Calculator>
+    <SimMission.Calculator id="SectionChangeTimer" InstanceId="{7B522309-83BF-4F47-BACB-0879A78B6CD6}" StartValue="0.000">
+      <SimBase.Descr>SectionChangeTimer</SimBase.Descr>
+      <WorldBase.Activated>false</WorldBase.Activated>
+      <CalculatorFormula>
+				(X:SectionChangeTimer)
+			</CalculatorFormula>
+      <CalculatorParameterList>
+        <ReferenceParameter NameInFormula="SectionChangeTimer" UniqueRefId="{4317D4B9-6E4B-4124-92A3-44618FDEC843}">
+          <ReferenceParameterName>SectionChangeTimer</ReferenceParameterName>
+        </ReferenceParameter>
+      </CalculatorParameterList>
+    </SimMission.Calculator>
+    <SimMission.Calculator id="SectionTime" InstanceId="{05E5A2FA-DAB3-433A-86C5-B00D431E10D4}" StartValue="0.000">
+      <SimBase.Descr>Player Section Time</SimBase.Descr>
+      <WorldBase.Activated>false</WorldBase.Activated>
+      <CalculatorFormula>
+					(X:RaceTime)
+					(X:PreviousSectionTime)
+				-
+			</CalculatorFormula>
+      <CalculatorParameterList>
+        <ReferenceParameter NameInFormula="SectionChangeTimer" UniqueRefId="{7B522309-83BF-4F47-BACB-0879A78B6CD6}" />
+        <ReferenceParameter NameInFormula="RaceTime" UniqueRefId="{C5C67F04-E29A-4142-95B5-F4FBB42436D3}" />
+        <FormulaParameter NameInFormula="PreviousSectionTime" StartValue="0.000">
+          <CalculatorFormula>
+						(X:SectionChangeTimer) 1 == if{
+							(X:RaceTime)
+						} els{
+							(X:PreviousSectionTime)
+						}
+					</CalculatorFormula>
+        </FormulaParameter>
+      </CalculatorParameterList>
+    </SimMission.Calculator>
+    <SimMission.Calculator id="SectionAverageAltitude" InstanceId="{727A7DF6-03A3-4C85-9F22-A58B609C1B5D}" StartValue="0.000">
+      <SimBase.Descr>Player Section Average Alt</SimBase.Descr>
+      <WorldBase.Activated>false</WorldBase.Activated>
+      <CalculatorFormula>
+				(X:SectionTime) if{
+						(X:SectionSumAltitude)
+						(X:SectionTime)
+					/
+				} els{
+					(X:result)
+				}
+			</CalculatorFormula>
+      <CalculatorParameterList>
+        <ReferenceParameter NameInFormula="SectionChangeTimer" UniqueRefId="{7B522309-83BF-4F47-BACB-0879A78B6CD6}" />
+        <ReferenceParameter NameInFormula="SectionTime" UniqueRefId="{05E5A2FA-DAB3-433A-86C5-B00D431E10D4}" />
+        <FormulaParameter NameInFormula="SectionSumAltitude" StartValue="0.000">
+          <CalculatorFormula>
+									(A:PLANE ALTITUDE, feet)
+									(X:dtime)
+								*
+								(X:SectionSumAltitude)
+							+
+								(X:SectionChangeTimer)
+								1
+							!=
+						*
+					</CalculatorFormula>
+        </FormulaParameter>
+      </CalculatorParameterList>
+    </SimMission.Calculator>
+    <SimMission.Calculator id="SectionBaseScore" InstanceId="{96F7FC71-A416-4D8C-87DD-86ADF7CA6878}" StartValue="0.000">
+      <SimBase.Descr>Player Section Base Score</SimBase.Descr>
+      <WorldBase.Activated>false</WorldBase.Activated>
+      <CalculatorFormula>
+						(X:CurrentSection)
+						0
+					!=
+					(X:BaseScore)
+				*
+			</CalculatorFormula>
+      <CalculatorParameterList>
+        <ReferenceParameter NameInFormula="CurrentSection" UniqueRefId="{4317D4B9-6E4B-4124-92A3-44618FDEC843}" />
+        <ReferenceParameter NameInFormula="BaseScoreAltitudeMin" UniqueRefId="{83614E9C-4427-4E8E-8515-8A1D91CB92BC}" />
+        <ReferenceParameter NameInFormula="BaseScoreAltitudeMax" UniqueRefId="{C70B2B0C-DC5B-4BFB-81EA-1DA3824A4304}" />
+        <ReferenceParameter NameInFormula="SectionAverageAltitude" UniqueRefId="{727A7DF6-03A3-4C85-9F22-A58B609C1B5D}" />
+        <FormulaParameter NameInFormula="BaseScoreMin" StartValue="10000.000" />
+        <FormulaParameter NameInFormula="BaseScoreMax" StartValue="100000.000" />
+        <FormulaParameter NameInFormula="AlphaMax" StartValue="0.000">
+          <CalculatorFormula>
+									(X:BaseScoreMin)
+								ln
+									(X:BaseScoreMax)
+								ln
+							-
+								(X:BaseScoreAltitudeMin)
+								(X:BaseScoreAltitudeMax)
+							-
+						/
+					</CalculatorFormula>
+        </FormulaParameter>
+        <FormulaParameter NameInFormula="Alpha" StartValue="0.000">
+          <CalculatorFormula>
+							(X:AlphaMax)
+							0.6
+						*
+					</CalculatorFormula>
+        </FormulaParameter>
+        <FormulaParameter NameInFormula="Beta" StartValue="0.000">
+          <CalculatorFormula>
+													(X:BaseScoreAltitudeMax)
+													(X:BaseScoreAltitudeMin)
+												-
+												(X:Alpha)
+											*
+										neg
+									exp
+									(X:BaseScoreMax)
+								*
+								(X:BaseScoreMin)
+							-
+									(X:BaseScoreAltitudeMax)
+									(X:BaseScoreAltitudeMin)
+								-
+								(X:BaseScoreMin)
+							*
+						/
+					</CalculatorFormula>
+        </FormulaParameter>
+        <FormulaParameter NameInFormula="CorrectedAltitude" StartValue="0.000">
+          <CalculatorFormula>
+							(X:SectionAverageAltitude)
+							(X:BaseScoreAltitudeMin)
+						max
+					</CalculatorFormula>
+        </FormulaParameter>
+        <FormulaParameter NameInFormula="BaseScore" StartValue="0.000">
+          <CalculatorFormula>
+												(X:CorrectedAltitude)
+												(X:BaseScoreAltitudeMin)
+											-
+											(X:Alpha)
+										*
+									neg
+								exp
+								(X:BaseScoreMax)
+							*
+										(X:CorrectedAltitude)
+										(X:BaseScoreAltitudeMin)
+									-
+									(X:Beta)
+								*
+								1
+							+
+						/
+					</CalculatorFormula>
+        </FormulaParameter>
+      </CalculatorParameterList>
+    </SimMission.Calculator>
+    <SimMission.Calculator id="SectionScoreMultiplier" InstanceId="{1E8F4254-1460-4513-8688-07076959A440}" StartValue="0.000">
+      <SimBase.Descr>Player Section Score Multiplier</SimBase.Descr>
+      <WorldBase.Activated>false</WorldBase.Activated>
+      <CalculatorFormula>
+							(X:TimeFactor)
+							1.25
+						*
+						0.75
+					+
+						(X:CurrentSection)
+						0
+					!=
+				*
+			</CalculatorFormula>
+      <CalculatorParameterList>
+        <ReferenceParameter NameInFormula="CurrentSection" UniqueRefId="{4317D4B9-6E4B-4124-92A3-44618FDEC843}" />
+        <ReferenceParameter NameInFormula="SectionTimeReference" UniqueRefId="{1EC62447-9647-472E-9A92-AA5F0B8C5827}" />
+        <ReferenceParameter NameInFormula="SectionTime" UniqueRefId="{05E5A2FA-DAB3-433A-86C5-B00D431E10D4}" />
+        <FormulaParameter NameInFormula="SectionTimeBaseMin" StartValue="0.000">
+          <CalculatorFormula>
+						(X:SectionTimeReference) 1.1 *
+					</CalculatorFormula>
+        </FormulaParameter>
+        <FormulaParameter NameInFormula="SectionTimeBaseMax" StartValue="1.000">
+          <CalculatorFormula>
+						(X:SectionTimeReference) 4 *
+					</CalculatorFormula>
+        </FormulaParameter>
+        <FormulaParameter NameInFormula="TimeFactor" StartValue="0.000">
+          <CalculatorFormula>
+									1
+											(X:SectionTime)
+											(X:SectionTimeBaseMin)
+										-
+											(X:SectionTimeBaseMax)
+											(X:SectionTimeBaseMin)
+										-
+									/
+								-
+								1
+							min
+							0
+						max
+					</CalculatorFormula>
+        </FormulaParameter>
+      </CalculatorParameterList>
+    </SimMission.Calculator>
+    <SimMission.Calculator id="SectionScore" InstanceId="{AA0FC624-D845-4515-9A0F-96D43F2A095F}" StartValue="0.000">
+      <SimBase.Descr>Player Section Score</SimBase.Descr>
+      <WorldBase.Activated>false</WorldBase.Activated>
+      <CalculatorFormula>
+					(X:SectionBaseScore)
+					(X:SectionScoreMultiplier)
+				*
+				flr
+			</CalculatorFormula>
+      <CalculatorParameterList>
+        <ReferenceParameter NameInFormula="SectionBaseScore" UniqueRefId="{96F7FC71-A416-4D8C-87DD-86ADF7CA6878}" />
+        <ReferenceParameter NameInFormula="SectionScoreMultiplier" UniqueRefId="{1E8F4254-1460-4513-8688-07076959A440}" />
+      </CalculatorParameterList>
+    </SimMission.Calculator>
+    <SimMission.Calculator id="GlobalScore" InstanceId="{82CE694A-BD3C-4607-A130-8A7292294715}" StartValue="0.000">
+      <SimBase.Descr>Player Global Score</SimBase.Descr>
+      <WorldBase.Activated>false</WorldBase.Activated>
+      <CalculatorFormula>
+				(X:SectionChangeTimer) 2 == if{
+						(X:result)
+								(X:CurrentSection)
+								0
+							!=
+							(X:SectionScore)
+						*
+					+
+				} els{
+					(X:result)
+				}
+			</CalculatorFormula>
+      <CalculatorParameterList>
+        <ReferenceParameter NameInFormula="CurrentSection" UniqueRefId="{4317D4B9-6E4B-4124-92A3-44618FDEC843}" />
+        <ReferenceParameter NameInFormula="SectionChangeTimer" UniqueRefId="{7B522309-83BF-4F47-BACB-0879A78B6CD6}" />
+        <ReferenceParameter NameInFormula="SectionScore" UniqueRefId="{AA0FC624-D845-4515-9A0F-96D43F2A095F}" />
+      </CalculatorParameterList>
+    </SimMission.Calculator>
+    <SimMission.WaitAction id="Pause_1s" InstanceId="{CCADFA69-1533-47D7-8831-6C3CCDAFCC92}">
+      <Immediate>false</Immediate>
+      <SimBase.Descr>Pause 1s</SimBase.Descr>
+      <Duration>1.000</Duration>
+    </SimMission.WaitAction>
+    <SimMission.WaitAction id="Pause_2s" InstanceId="{B6D32E3B-2923-478D-96CE-25BB6C630296}">
+      <Immediate>false</Immediate>
+      <SimBase.Descr>Pause 2s</SimBase.Descr>
+      <Duration>2.000</Duration>
+    </SimMission.WaitAction>
+    <SimMission.WaitAction id="Pause_3s" InstanceId="{9261A372-8B1A-47A3-B578-C89518068549}">
+      <Immediate>false</Immediate>
+      <SimBase.Descr>Pause 3s</SimBase.Descr>
+      <Duration>3.000</Duration>
+    </SimMission.WaitAction>
+    <SimMission.ObjectActivationAction id="ActivateOutOfAreaWatcherStartEnd" InstanceId="{609E382D-DFEA-4C33-8D04-595306018B12}">
+      <NewObjectState>true</NewObjectState>
+      <WorldBase.ObjectReferenceList>
+        <ObjectReference id="OutOfAreaWatcherStartEnd" InstanceId="{2773B3A0-6445-4F23-80A4-711E2E6D9431}" />
+      </WorldBase.ObjectReferenceList>
+    </SimMission.ObjectActivationAction>
+    <SimMission.ObjectActivationAction id="DeActivateOutOfAreaWatcherStartEnd" InstanceId="{3B9CA4B5-4621-4655-8579-439C0E99BB3A}">
+      <NewObjectState>false</NewObjectState>
+      <WorldBase.ObjectReferenceList>
+        <ObjectReference id="OutOfAreaWatcherStartEnd" InstanceId="{2773B3A0-6445-4F23-80A4-711E2E6D9431}" />
+      </WorldBase.ObjectReferenceList>
+    </SimMission.ObjectActivationAction>
+    <SimMission.BackOnTrackAction InstanceId="{C1AF4421-83F0-4A67-9CA7-4B90403DAD6A}">
+      <DisqualifyReason>LEAVING_AREA</DisqualifyReason>
+    </SimMission.BackOnTrackAction>
+    <SimMission.Calculator id="OutOfAreaWatcherStartEnd" InstanceId="{2773B3A0-6445-4F23-80A4-711E2E6D9431}">
+      <WorldBase.Activated>false</WorldBase.Activated>
+      <SimBase.Descr>OutOfAreaWatcherSTARTandEND</SimBase.Descr>
+      <CalculatorFormula>
+				(X:DQZone) not
+			</CalculatorFormula>
+      <CalculatorParameterList>
+        <ReferenceParameter NameInFormula="WarningZoneStart" UniqueRefId="{CE1E6CF8-B2BB-430C-8CED-D5163BC08B5E}" />
+        <ReferenceParameter NameInFormula="WarningZoneEnd" UniqueRefId="{882D4BA3-05DE-4950-A82A-83BAFC6D42D0}" />
+        <ReferenceParameter NameInFormula="DQZoneStart" UniqueRefId="{ECAD4D21-7191-44D8-B926-B4CDF36B71CF}" />
+        <ReferenceParameter NameInFormula="DQZoneEnd" UniqueRefId="{FC2D4FF9-9690-40D2-B365-4AFF553FBE6C}" />
+        <FormulaParameter NameInFormula="IsInDQZone" StartValue="0.000">
+          <CalculatorFormula>
+						(X:DQZoneStart) 1 == 
+						(X:DQZoneEnd) 1 == 
+						or
+					</CalculatorFormula>
+        </FormulaParameter>
+        <FormulaParameter NameInFormula="IsInWarningZone" StartValue="0.000">
+          <CalculatorFormula>
+						(X:WarningZoneStart) 1 ==  
+						(X:WarningZoneEnd) 1 ==  
+						or
+					</CalculatorFormula>
+        </FormulaParameter>
+      </CalculatorParameterList>
+      <CalculatorActions>
+        <CalculatorAction>
+          <CalculatorFormula>
+						(X:IsInWarningZone)
+					</CalculatorFormula>
+          <Actions>
+            <WorldBase.ObjectReference id="ACTNotif_LeavingArea" InstanceId="{D8295661-D0B6-42ED-BF32-E06FE6FB2B5E}" />
+          </Actions>
+        </CalculatorAction>
+        <CalculatorAction>
+          <CalculatorFormula>
+						(X:IsInWarningZone) not
+					</CalculatorFormula>
+          <Actions>
+            <WorldBase.ObjectReference id="DACTNotif_LeavingArea" InstanceId="{55198B70-1C8F-49C2-8C43-CEFA9E6BE858}" />
+          </Actions>
+        </CalculatorAction>
+        <CalculatorAction>
+          <CalculatorFormula>
+						(X:IsInDQZone)
+					</CalculatorFormula>
+          <Actions>
+            <WorldBase.ObjectReference id="DACTNotif_LeavingArea" InstanceId="{55198B70-1C8F-49C2-8C43-CEFA9E6BE858}" />
+            <WorldBase.ObjectReference id="BackOnTrackAction" InstanceId="{C1AF4421-83F0-4A67-9CA7-4B90403DAD6A}" />
+          </Actions>
+        </CalculatorAction>
+      </CalculatorActions>
+    </SimMission.Calculator>
+    <SimMission.RectangleArea InstanceId="{ECAD4D21-7191-44D8-B926-B4CDF36B71CF}">
+      <SimBase.Descr>StartOoB_DQ_Area</SimBase.Descr>
+      <Length>30000.000</Length>
+      <Width>300.000</Width>
+      <Height>53000.000</Height>
+      <WorldBase.AttachedWorldObject>
+        <OffsetXYZ>0.000,0.000,-400.000,0.000</OffsetXYZ>
+        <ObjectReference id="StartOoB_Warning_Area" InstanceId="{CE1E6CF8-B2BB-430C-8CED-D5163BC08B5E}" />
+      </WorldBase.AttachedWorldObject>
+    </SimMission.RectangleArea>
+    <SimMission.RectangleArea InstanceId="{882D4BA3-05DE-4950-A82A-83BAFC6D42D0}">
+      <SimBase.Descr>EndOoB_Warning_Area</SimBase.Descr>
+      <Length>30000.000</Length>
+      <Width>1250.000</Width>
+      <Height>53000.000</Height>
+      <WorldBase.AttachedWorldObject>
+        <OffsetXYZ>0.000,0.000,2750.000,0.000</OffsetXYZ>
+        <ObjectReference id="EndTrigger" InstanceId="{103E75E5-BCC7-4527-9B73-B81E119A52C3}" />
+      </WorldBase.AttachedWorldObject>
+    </SimMission.RectangleArea>
+    <SimMission.RectangleArea InstanceId="{FC2D4FF9-9690-40D2-B365-4AFF553FBE6C}">
+      <SimBase.Descr>EndOoB_DQ_Area</SimBase.Descr>
+      <Length>30000.000</Length>
+      <Width>2000.000</Width>
+      <Height>53000.000</Height>
+      <WorldBase.AttachedWorldObject>
+        <OffsetXYZ>0.000,0.000,4500.000,0.000</OffsetXYZ>
+        <ObjectReference id="EndTrigger" InstanceId="{103E75E5-BCC7-4527-9B73-B81E119A52C3}" />
+      </WorldBase.AttachedWorldObject>
+    </SimMission.RectangleArea>
+    <SimMission.FlowEventTrigger>
+      <SimBase.Descr>RACE_BACK_ON_TRACK</SimBase.Descr>
+      <OneShot>false</OneShot>
+      <WorldBase.Activated>true</WorldBase.Activated>
+      <FlowEvents>
+        <FlowEvent id="RACE_BACK_ON_TRACK" />
+      </FlowEvents>
+      <Actions>
+        <WorldBase.ObjectReference id="Play_Activity_FadeToBlack_MRK" InstanceId="{12418C63-BB3E-4D27-A436-0892AAB7511A}" />
+      </Actions>
+    </SimMission.FlowEventTrigger>
+    <SimMission.PlaySoundAction InstanceId="{12418C63-BB3E-4D27-A436-0892AAB7511A}">
+      <SimBase.Descr>Play_Sound_Backontrack</SimBase.Descr>
+      <WorldBase.NodeName>Activity_FadeToBlack</WorldBase.NodeName>
+      <WwiseEventName>Activity_FadeToBlack_MRK</WwiseEventName>
+      <WorldBase.WorldPosition>N39° 39' 36.42",W119° 52' 33.99",+005049.98</WorldBase.WorldPosition>
+      <WorldBase.Orientation>0.000,0.000,102.000</WorldBase.Orientation>
+    </SimMission.PlaySoundAction>
+    <SimMission.FlowStateWise InstanceId="{ADA77A92-70F0-4C6D-BF52-9A3EB8407FA1}">
+      <SimBase.Descr>WiseAFSSet</SimBase.Descr>
+      <GroupName>ACTIVITIES_FLOW_STATE</GroupName>
+      <ElementName>LOW_ALTITUDE</ElementName>
+    </SimMission.FlowStateWise>
+    <SimMission.FlowStateWise InstanceId="{1E4103C0-CF38-4B28-8BF2-F1F65DDF2E38}">
+      <SimBase.Descr>SetWwiseState_MFS_TRANSITION</SimBase.Descr>
+      <GroupName>MISSION_FLOW_STATE</GroupName>
+      <ElementName>TRANSITION</ElementName>
+    </SimMission.FlowStateWise>
+    <SimMission.FlowStateWise InstanceId="{46286132-987E-4798-979F-B37A56513BCF}">
+      <SimBase.Descr>SetWwiseState_MFS_RTC_INTRO</SimBase.Descr>
+      <GroupName>MISSION_FLOW_STATE</GroupName>
+      <ElementName>RTC_INTRO</ElementName>
+    </SimMission.FlowStateWise>
+    <SimMission.FlowStateWise InstanceId="{3633BEE8-62B1-44F6-8703-EEF57A1BE8C7}">
+      <SimBase.Descr>SetWwiseState_MFS_RTC_OUTRO</SimBase.Descr>
+      <GroupName>MISSION_FLOW_STATE</GroupName>
+      <ElementName>RTC_OUTRO</ElementName>
+    </SimMission.FlowStateWise>
+    <SimMission.FlowStateWise InstanceId="{7A9AAD63-7CE2-468F-A6F2-4C36943DB66B}">
+      <SimBase.Descr>SetWwiseState_MFS_INGAME_01</SimBase.Descr>
+      <GroupName>MISSION_FLOW_STATE</GroupName>
+      <ElementName>INGAME_01</ElementName>
+    </SimMission.FlowStateWise>
+    <SimMission.FlowStateWise InstanceId="{AE2CD6AF-0BD0-480B-9B8A-82C6C37BC919}">
+      <SimBase.Descr>SetWwiseState_MFS_REWARD_SCREEN</SimBase.Descr>
+      <GroupName>MISSION_FLOW_STATE</GroupName>
+      <ElementName>REWARD_SCREEN</ElementName>
+    </SimMission.FlowStateWise>
+    <SimMission.RTPCAction InstanceId="{C2EDF4DB-3AE3-42C9-B8F3-0310DCD7C8CC}">
+      <SimBase.Descr>Set_Music_SC_Attack_MINUS3</SimBase.Descr>
+      <WwiseRTPCName>METER_ATTACK_TIME_MINUS3</WwiseRTPCName>
+      <WwiseRTPCValue>0.000</WwiseRTPCValue>
+    </SimMission.RTPCAction>
+    <SimMission.RTPCAction InstanceId="{4801FB6E-DA7C-4B6B-AB40-6A05FA328574}">
+      <SimBase.Descr>Set_Music_SC_Hold_MINUS3</SimBase.Descr>
+      <WwiseRTPCName>METER_HOLD_TIME_MINUS3</WwiseRTPCName>
+      <WwiseRTPCValue>0.000</WwiseRTPCValue>
+    </SimMission.RTPCAction>
+    <SimMission.RTPCAction InstanceId="{3AE5527F-3F72-4A7D-B681-E6A042EAADCE}">
+      <SimBase.Descr>Set_Music_SC_Release_MINUS3</SimBase.Descr>
+      <WwiseRTPCName>METER_RELEASE_TIME_MINUS3</WwiseRTPCName>
+      <WwiseRTPCValue>0.000</WwiseRTPCValue>
+    </SimMission.RTPCAction>
+    <SimMission.RTPCAction InstanceId="{0F129E6A-B070-4A2D-AAEC-7B75C85C68BD}">
+      <SimBase.Descr>Set_Music_SC_Attack_MINUS6</SimBase.Descr>
+      <WwiseRTPCName>METER_ATTACK_TIME_MINUS6</WwiseRTPCName>
+      <WwiseRTPCValue>3.000</WwiseRTPCValue>
+    </SimMission.RTPCAction>
+    <SimMission.RTPCAction InstanceId="{B0C2B324-C239-41E2-8167-80C134183168}">
+      <SimBase.Descr>Set_Music_SC_Hold_MINUS6</SimBase.Descr>
+      <WwiseRTPCName>METER_HOLD_TIME_MINUS6</WwiseRTPCName>
+      <WwiseRTPCValue>1.000</WwiseRTPCValue>
+    </SimMission.RTPCAction>
+    <SimMission.RTPCAction InstanceId="{4F1CF4EF-B77D-4224-A239-40A7723ED812}">
+      <SimBase.Descr>Set_Music_SC_Release_MINUS6</SimBase.Descr>
+      <WwiseRTPCName>METER_RELEASE_TIME_MINUS6</WwiseRTPCName>
+      <WwiseRTPCValue>1.000</WwiseRTPCValue>
+    </SimMission.RTPCAction>
+    <SimMission.RTPCAction InstanceId="{DF003D5C-2D59-44CB-BF51-F18E41B2E5B3}">
+      <SimBase.Descr>MRK_AIRCRAFT_ATTENUATION_SOUND_INGAME_01</SimBase.Descr>
+      <WwiseRTPCName>MISSIONS_FLOW_AIRCRAFT_ATTENUATION</WwiseRTPCName>
+      <WwiseRTPCValue>-7.000</WwiseRTPCValue>
+    </SimMission.RTPCAction>
+    <SimMission.RTPCAction InstanceId="{0BF6D783-64D4-4C4C-8702-264E6DF9B8B0}">
+      <SimBase.Descr>MRK_AIRCRAFT_ATTENUATION_SOUND_RTC_INTRO</SimBase.Descr>
+      <WwiseRTPCName>MISSIONS_FLOW_AIRCRAFT_ATTENUATION</WwiseRTPCName>
+      <WwiseRTPCValue>-16.000</WwiseRTPCValue>
+    </SimMission.RTPCAction>
+    <SimMission.RTPCAction InstanceId="{A00F3D4D-6DD5-4F25-984C-8B49EA7D8A75}">
+      <SimBase.Descr>MRK_AIRCRAFT_ATTENUATION_SOUND_RTC_OUTRO</SimBase.Descr>
+      <WwiseRTPCName>MISSIONS_FLOW_AIRCRAFT_ATTENUATION</WwiseRTPCName>
+      <WwiseRTPCValue>0.000</WwiseRTPCValue>
+    </SimMission.RTPCAction>
+    <SimMission.RTPCAction InstanceId="{A6E9EB83-D301-4EB8-9014-29E65AEA7B78}">
+      <SimBase.Descr>MRK_AIRCRAFT_ATTENUATION_SOUND_TRANSITION_Intro</SimBase.Descr>
+      <WwiseRTPCName>MISSIONS_FLOW_AIRCRAFT_ATTENUATION</WwiseRTPCName>
+      <WwiseRTPCValue>-30.000</WwiseRTPCValue>
+    </SimMission.RTPCAction>
+    <SimMission.RTPCAction InstanceId="{D327E372-9392-4B27-BC8E-B7BC5E68DF93}">
+      <SimBase.Descr>MRK_AIRCRAFT_ATTENUATION_SOUND_TRANSITION_Outro</SimBase.Descr>
+      <WwiseRTPCName>MISSIONS_FLOW_AIRCRAFT_ATTENUATION</WwiseRTPCName>
+      <WwiseRTPCValue>-200.000</WwiseRTPCValue>
+    </SimMission.RTPCAction>
+    <SimMission.RTPCAction InstanceId="{EAB13272-D0DF-41B3-988F-E8B22C396114}">
+      <SimBase.Descr>MRK_HEADSET_SFX_ATTENUATION_RTC_OUTRO</SimBase.Descr>
+      <WwiseRTPCName>MISSIONS_FLOW_HEADSET_SFX_ATTENUATION</WwiseRTPCName>
+      <WwiseRTPCValue>-200.000</WwiseRTPCValue>
+    </SimMission.RTPCAction>
+    <SimMission.RTPCAction InstanceId="{9EBC0461-AAA8-4BCC-AC37-817544AB26DB}">
+      <SimBase.Descr>MRK_HEADSET_SFX_ATTENUATION_Ingame</SimBase.Descr>
+      <WwiseRTPCName>MISSIONS_FLOW_HEADSET_SFX_ATTENUATION</WwiseRTPCName>
+      <WwiseRTPCValue>-7.000</WwiseRTPCValue>
+    </SimMission.RTPCAction>
+    <SimMission.RTPCDistanceUpdater id="Sender" InstanceId="{C70B2B0C-DC5B-4BFB-81EA-1DA3824A4314}">
+      <SimBase.Descr>Distance between camera and final gate</SimBase.Descr>
+      <WwiseRTPCName>DISTANCE_TO_OBJECT</WwiseRTPCName>
+      <WorldBase.ObjectReference id="FinalGate" InstanceId="{FD0F68D5-0853-4E12-B205-B0EA62836177}" />
+    </SimMission.RTPCDistanceUpdater>
+  </WorldBase.Flight>
+  <WorldBase.TemplateResources>
+    <SimBase.ResourceName>Missions\Asobo\Templates\VolumeRacePointTemplate</SimBase.ResourceName>
+    <SimBase.ResourceName>Missions\Asobo\Templates\FlightObjectPanelTemplate</SimBase.ResourceName>
+  </WorldBase.TemplateResources>
+</SimBase.Document>
