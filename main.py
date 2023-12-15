@@ -1,8 +1,10 @@
 import aerosandbox as asb
 import aerosandbox.numpy as np
 from aerosandbox.tools import units as u
-from terrain_model.load_raw_data import lat_lon_to_north_east
-
+from terrain_model.load_raw_data import lat_lon_to_north_east, terrain_data
+import matplotlib.pyplot as plt
+import aerosandbox.tools.pretty_plots as p
+import pyvista as pv
 from airplane import airplane  # See cessna152.py for details.
 
 lat_i = 46 + 32 / 60 + 53.84 / 3600
@@ -211,7 +213,45 @@ sol = opti.solve(behavior_on_failure="return_last")
 ### Substitute the optimization variables in the dynamics instance with their solved values (in-place)
 dyn = sol(dyn)
 
-import pyvista as pv
+print("Plotting...")
+fig, ax = plt.subplots(
+    figsize=(16,6)
+)
+i_lims = np.sort(np.array([
+    np.argmin(np.abs(terrain_data["north_edges"] - north_i)),
+    np.argmin(np.abs(terrain_data["north_edges"] - north_f)),
+]))
+j_lims = np.sort(np.array([
+    np.argmin(np.abs(terrain_data["east_edges"] - east_i)),
+    np.argmin(np.abs(terrain_data["east_edges"] - east_f)),
+]))
+i_lims += np.array([-100, 100])
+j_lims += np.array([-100, 100])
+i_lims = np.clip(i_lims, 0, terrain_data["elev"].shape[0] - 1)
+j_lims = np.clip(j_lims, 0, terrain_data["elev"].shape[1] - 1)
+
+
+plt.imshow(
+    terrain_data["elev"][i_lims[0]:i_lims[1], j_lims[0]:j_lims[1]],
+    cmap='terrain',
+    origin="lower",
+    extent=[
+        terrain_data["east_edges"][j_lims[0]],
+        terrain_data["east_edges"][j_lims[-1]],
+        terrain_data["north_edges"][i_lims[0]],
+        terrain_data["north_edges"][i_lims[-1]],
+    ],
+)
+plt.plot(
+    dyn.y_e,
+    dyn.x_e,
+    color="red",
+    alpha=0.8,
+    linewidth=2,
+)
+
+p.show_plot()
+
 plotter = dyn.draw(
     backend="pyvista",
     show=False,
@@ -219,7 +259,6 @@ plotter = dyn.draw(
     scale_vehicle_model=1e3,
 )
 
-from terrain_model.load_raw_data import terrain_data
 grid = pv.RectilinearGrid(
     terrain_data["north_edges"],
     terrain_data["east_edges"],
