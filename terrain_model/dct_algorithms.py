@@ -1,4 +1,4 @@
-import numpy as np
+import aerosandbox.numpy as np
 from scipy import fft
 
 
@@ -30,6 +30,7 @@ def manual_inverse_continuous_cosine_transform(
 
             """
     assert len(query_points.shape) == 2
+    M = query_points.shape[0]
     N = query_points.shape[1]
     assert len(fft_image.shape) == N
 
@@ -40,7 +41,8 @@ def manual_inverse_continuous_cosine_transform(
         for i in range(N)
     ]
 
-    for i, query_point in enumerate(query_points):
+    for i in range(M):
+        query_point = query_points[i, :]
         output_components = np.ones(fft_image.shape)
 
         for d in range(N):
