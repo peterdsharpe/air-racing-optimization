@@ -235,12 +235,12 @@ plt.imshow(
     terrain_data["elev"][i_lims[0]:i_lims[1], j_lims[0]:j_lims[1]],
     cmap='terrain',
     origin="lower",
-    extent=[
+    extent=(
         terrain_data["east_edges"][j_lims[0]],
         terrain_data["east_edges"][j_lims[-1]],
         terrain_data["north_edges"][i_lims[0]],
         terrain_data["north_edges"][i_lims[-1]],
-    ],
+    ),
 )
 plt.plot(
     dyn.y_e,
@@ -249,6 +249,7 @@ plt.plot(
     alpha=0.8,
     linewidth=2,
 )
+p.equal()
 
 p.show_plot()
 
