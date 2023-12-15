@@ -1,5 +1,5 @@
-from load_raw_data import terrain_data, north_east_to_normalized_coordinates, lat_lon_to_north_east
-from dct_algorithms import dctn, manual_inverse_continuous_cosine_transform
+from terrain_model.load_raw_data import terrain_data, north_east_to_normalized_coordinates, lat_lon_to_north_east
+from terrain_model.dct_algorithms import dctn, manual_inverse_continuous_cosine_transform
 from scipy import fft, ndimage, interpolate
 import numpy as np
 import aerosandbox as asb

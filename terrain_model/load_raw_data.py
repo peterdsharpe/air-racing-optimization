@@ -161,7 +161,7 @@ if __name__ == '__main__':
             lon_edges.max(),
             lat_edges.min(),
             lat_edges.max()
-        ]
+        ],
     )
     p.equal()
     plt.colorbar(label='Elevation [m]')
