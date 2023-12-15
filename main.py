@@ -183,7 +183,7 @@ from terrain_model.interpolated_model import get_elevation_interpolated_north_ea
 terrain_altitude = get_elevation_interpolated_north_east(
     query_points_north=dyn.x_e,
     query_points_east=dyn.y_e,
-    resolution=(200, 600)
+    resolution=(20, 60)
 )
 altitude_agl = dyn.altitude - terrain_altitude
 
@@ -242,16 +242,18 @@ plt.imshow(
         terrain_data["north_edges"][i_lims[-1]],
     ),
 )
-plt.plot(
+p.plot_color_by_value(
     dyn.y_e,
     dyn.x_e,
-    color="red",
-    alpha=0.8,
-    linewidth=2,
+    c=dyn.speed,
+    cmap="Reds",
+    colorbar=True,
+    colorbar_label="Speed [m/s]",
 )
 p.equal()
-
-p.show_plot()
+p.show_plot(
+    rotate_axis_labels=False
+)
 
 plotter = dyn.draw(
     backend="pyvista",
