@@ -13,11 +13,6 @@ def dctn(
         orthogonalize=False
     )
 
-
-import jax
-
-
-# @jax.jit
 def manual_inverse_continuous_cosine_transform(
         query_points,
         fft_image,
@@ -129,14 +124,20 @@ def manual_inverse_continuous_cosine_transform(
             axis=tuple(range(N))
         )
 
+func = lambda query_points: manual_inverse_continuous_cosine_transform(
+    query_points=query_points,
+    fft_image=fft_vals
+)
 
 if __name__ == '__main__':
 
+
+    ### Checks for correctness
     x_max = 5
     y_max = 6
 
-    x = np.linspace(0, x_max, 300)
-    y = np.linspace(0, y_max, 100)
+    x = np.linspace(0, x_max, 50)
+    y = np.linspace(0, y_max, 150)
 
     X, Y = np.meshgrid(
         x, y,
@@ -151,16 +152,18 @@ if __name__ == '__main__':
 
     fft_vals = dctn(f)
 
-    with Timer("Overall"):
+    query_points = np.stack(
+            [
+                X.reshape(-1) / x_max,
+                Y.reshape(-1) / y_max,
+            ],
+            axis=1
+        )
+
+    with Timer("Correctness Check"):
         f_reconstructed = manual_inverse_continuous_cosine_transform(
-            query_points=np.stack(
-                [
-                    X.reshape(-1) / x_max,
-                    Y.reshape(-1) / y_max,
-                ],
-                axis=1
-            ),
-            fft_image=fft_vals,
+            query_points=query_points,
+            fft_image=fft_vals
         ).reshape(X.shape)
 
     f_reconstructed_scipy = fft.idctn(
@@ -171,3 +174,37 @@ if __name__ == '__main__':
     )
 
     assert np.allclose(f, f_reconstructed)
+
+    ### Benchmarking
+
+    x = np.linspace(0, x_max, 500)
+    y = np.linspace(0, y_max, 1000)
+
+    X, Y = np.meshgrid(
+        x, y,
+        indexing="ij"
+    )
+
+    f = 5 + (
+            2 * np.sin(1 / 40 * (2 * np.pi) * X) +
+            1 * np.sin(1 / 30 * (2 * np.pi) * Y) +
+            0.1 * np.random.randn(*X.shape)
+    )
+
+    fft_vals = dctn(f)
+
+    M  = 1000
+
+    query_points = np.stack(
+            [
+                np.linspace(0, 1, M),
+                np.linspace(0, 1, M),
+            ],
+            axis=1
+        )
+
+    with Timer("Benchmarking"):
+        f_reconstructed = manual_inverse_continuous_cosine_transform(
+            query_points=query_points,
+            fft_image=fft_vals
+        )
