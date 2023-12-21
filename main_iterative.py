@@ -62,23 +62,25 @@ dyn_init_guess = asb.DynamicsPointMass3DSpeedGammaTrack(
         final_state.y_e,
         N
     ),
-    z_e=np.ones(N) * (-5000 * u.foot),
+    z_e=np.ones(N) * (-2000 * u.foot),
     speed=np.ones(N) * initial_state.speed,
     gamma=np.zeros(N),
     track=np.ones(N) * np.arctan2(
         d_position[1],
         d_position[0],
     ),
-    alpha=np.ones(N) * 5,
+    alpha=np.ones(N) * 1,
     beta=np.zeros(N),
     bank=np.ones(N) * np.radians(0),
 )
 
 resolutions = [
-    (4, 12),
     (8, 24),
     (16, 48),
+    (24, 72),
     (32, 96),
+    (48, 144),
+    (64, 192),
     (128, 384),
     (256, 768),
 ]
@@ -110,11 +112,11 @@ for resolution in resolutions:
         z_e=opti.variable(init_guess=dyns[-1].z_e),
         speed=opti.variable(
             init_guess=dyns[-1].speed,
-        lower_bound=10,
+            lower_bound=10,
         ),
         gamma=opti.variable(
             init_guess=dyns[-1].gamma,
-        scale=0.1,
+            scale=0.1,
         ),
         track=opti.variable(init_guess=dyns[-1].track),
         alpha=opti.variable(
@@ -263,9 +265,11 @@ for resolution in resolutions:
     plt.title(f"Resolution: {resolution}")
     p.equal()
     p.show_plot(
-        rotate_axis_labels=False
+        rotate_axis_labels=False,
+        savefig=[
+            f"./figures/trajectory_{resolution}.svg",
+        ]
     )
-
 
 ### Substitute the optimization variables in the dynamics instance with their solved values (in-place)
 dyn = sol(dyn)
