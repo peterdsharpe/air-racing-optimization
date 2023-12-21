@@ -1,5 +1,10 @@
+import skimage.filters
+
 from terrain_model.load_raw_data import lat_lon_to_north_east, terrain_data
 import numpy as np
+from scipy import ndimage
+
+print("Loading task-specific info and terrain data...")
 
 lat_start = 46 + 32 / 60 + 53.84 / 3600
 lon_start = -(122 + 28 / 60 + 8.98 / 3600)
@@ -41,10 +46,27 @@ terrain_data_zoomed = {
     "elev"             : terrain_data["elev"][i_lims[0]:i_lims[1], j_lims[0]:j_lims[1]],
     "north_edges"      : terrain_data["north_edges"][i_lims[0]:i_lims[1]],
     "east_edges"       : terrain_data["east_edges"][j_lims[0]:j_lims[1]],
-    "dx_north": dx_north,
-    "dx_east": dx_east,
+    "dx_north"         : dx_north,
+    "dx_east"          : dx_east,
+    "north_start": north_start,
+    "east_start": east_start,
+    "north_end": north_end,
+    "east_end": east_end,
     "north_start_index": np.argmin(np.abs(terrain_data["north_edges"][i_lims[0]:i_lims[1]] - north_start)),
     "east_start_index" : np.argmin(np.abs(terrain_data["east_edges"][j_lims[0]:j_lims[1]] - east_start)),
     "north_end_index"  : np.argmin(np.abs(terrain_data["north_edges"][i_lims[0]:i_lims[1]] - north_end)),
     "east_end_index"   : np.argmin(np.abs(terrain_data["east_edges"][j_lims[0]:j_lims[1]] - east_end)),
 }
+terrain_cost_heuristic = (
+        terrain_data_zoomed["elev"] -
+        ndimage.gaussian_filter(
+            terrain_data_zoomed["elev"],
+            (10000 / dx_north, 10000 / dx_east),
+            truncate=2
+        )
+)
+
+terrain_cost_heuristic = np.exp(
+    (terrain_cost_heuristic - terrain_cost_heuristic.mean())
+    / terrain_cost_heuristic.std()
+)
