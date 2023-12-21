@@ -24,53 +24,83 @@ def manual_inverse_continuous_cosine_transform(
                 query_points: Query points, a 2D array of shape (M, N), where M is the number of points and N is the number of dimensions.
                     * Should be normalized to the range [0, 1] in each dimension.
 
+                    * As an example, for a single query point on a 2D DCT, the shape would be (1, 2).
+
                 fft_image: The DCT coefficients of the image, which has N dimensions, each of arbitrary length.
 
             Returns: Values of the original function at the query points, a 1D array of shape (M,)
 
             """
-    assert len(query_points.shape) == 2
+    ### Use the fft_image to determine the number of dimensions
+    N = len(fft_image.shape)
+
+    ### Handle the query_points input
+    query_points = np.array(query_points) # Convert to a numpy array
+    if len(query_points.shape) == 0:
+        if N == 1:
+            query_points = np.array([[query_points]])
+        else:
+            raise ValueError("If query_points is a scalar, it must be a 1D DCT (i.e., `fft_image` must be 1D).")
+    elif len(query_points.shape) == 1:
+        if query_points.shape[0] == N:
+            query_points = np.array([query_points])
+        else:
+            raise ValueError("If query_points is a vector, it must have the same dimensionality as the DCT.")
+    elif len(query_points.shape) == 2:
+        if query_points.shape[1] != N:
+            raise ValueError("If query_points is a 2D array, it must have the same dimensionality as the DCT.")
+    else:
+        raise ValueError("`query_points` should be a 2D array of size (..., N), where N is the dimensionality of the DCT (as defined by `fft_image`).")
+
+    # At this point, query_points has shape (M, N)
     M = query_points.shape[0]
     N = query_points.shape[1]
-    assert len(fft_image.shape) == N
-
-    outputs = np.zeros(query_points.shape[0])
 
     normalized_frequency_edges = [
         np.arange(fft_image.shape[i])
         for i in range(N)
     ]
 
-    for i in range(M):
-        query_point = query_points[i, :]
-        output_components = np.ones(fft_image.shape)
+    ### Shape of intermediate arrays: (<N Axis Dimensions>, <M>). So the len(shape) of each array is N+1.
+    output_components_shape = (*fft_image.shape, M)
+    output_components = np.ones(output_components_shape)
 
-        for d in range(N):
-            edge_shape = [1] * N
-            edge_shape[d] = len(normalized_frequency_edges[d])
+    query_points_shape = ([1] * N) + [M]
 
-            output_components *= np.reshape(
-                np.cos(
-                    np.pi * normalized_frequency_edges[d] * query_point[d]
-                ),
+    for d in range(N):
+        edge_shape = [1] * (N + 1)
+        edge_shape[d] = len(normalized_frequency_edges[d])
+
+        output_components *= np.cos(
+            np.reshape(
+                np.pi * normalized_frequency_edges[d],
                 edge_shape
+            ) *
+            np.reshape(
+                query_points[:, d],
+                query_points_shape
             )
+        )
 
-            output_components *= np.reshape(
-                np.where(
-                    np.logical_or(
-                        normalized_frequency_edges[d] == 0,
-                        normalized_frequency_edges[d] == fft_image.shape[d] - 1
-                    ),
-                    1,
-                    2
+        output_components *= np.reshape(
+            np.where(
+                np.logical_or(
+                    normalized_frequency_edges[d] == 0,
+                    normalized_frequency_edges[d] == fft_image.shape[d] - 1
                 ),
-                edge_shape
-            )
+                1,
+                2
+            ),
+            edge_shape
+        )
 
-        output = np.sum(output_components * fft_image)
-
-        outputs[i] = output
+    outputs = np.sum(
+        output_components * np.reshape(
+            fft_image,
+            (*fft_image.shape, 1)
+        ),
+        axis=tuple(range(N))
+    )
 
     return outputs
 
@@ -106,5 +136,12 @@ if __name__ == '__main__':
         ),
         fft_image=fft_vals
     ).reshape(X.shape)
+
+    f_reconstructed_scipy = fft.idctn(
+        fft_vals,
+        type=1,
+        norm="forward",
+        orthogonalize=False
+    )
 
     assert np.allclose(f, f_reconstructed)
