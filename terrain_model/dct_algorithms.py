@@ -1,5 +1,6 @@
-import aerosandbox.numpy as np
+import numpy as np
 from scipy import fft
+from aerosandbox.tools.code_benchmarking import Timer
 
 
 def dctn(
@@ -16,6 +17,7 @@ def dctn(
 def manual_inverse_continuous_cosine_transform(
         query_points,
         fft_image,
+        include_gradient=False,
 ):
     """
             A manual implementation of the inverse N-dimensional continuous cosine transform using only np.cos().
@@ -35,7 +37,7 @@ def manual_inverse_continuous_cosine_transform(
     N = len(fft_image.shape)
 
     ### Handle the query_points input
-    query_points = np.array(query_points) # Convert to a numpy array
+    query_points = np.array(query_points)  # Convert to a numpy array
     if len(query_points.shape) == 0:
         if N == 1:
             query_points = np.array([[query_points]])
@@ -50,7 +52,8 @@ def manual_inverse_continuous_cosine_transform(
         if query_points.shape[1] != N:
             raise ValueError("If query_points is a 2D array, it must have the same dimensionality as the DCT.")
     else:
-        raise ValueError("`query_points` should be a 2D array of size (..., N), where N is the dimensionality of the DCT (as defined by `fft_image`).")
+        raise ValueError(
+            "`query_points` should be a 2D array of size (..., N), where N is the dimensionality of the DCT (as defined by `fft_image`).")
 
     # At this point, query_points has shape (M, N)
     M = query_points.shape[0]
@@ -71,36 +74,34 @@ def manual_inverse_continuous_cosine_transform(
         edge_shape = [1] * (N + 1)
         edge_shape[d] = len(normalized_frequency_edges[d])
 
-        output_components *= np.cos(
-            np.reshape(
-                np.pi * normalized_frequency_edges[d],
-                edge_shape
-            ) *
-            np.reshape(
-                query_points[:, d],
-                query_points_shape
+        with Timer("cos"):
+            output_components *= np.cos(
+                np.reshape(
+                    np.pi * normalized_frequency_edges[d],
+                    edge_shape
+                ) *
+                np.reshape(
+                    query_points[:, d],
+                    query_points_shape
+                )
             )
-        )
 
-        output_components *= np.reshape(
-            np.where(
-                np.logical_or(
-                    normalized_frequency_edges[d] == 0,
-                    normalized_frequency_edges[d] == fft_image.shape[d] - 1
-                ),
-                1,
-                2
+        # Multiply every value, except those on the first and last rows, by 2.
+        # Part of undoing the DCT-Type-1 normalization.
+        with Timer("2x"):
+            output_components[*[
+                slice(1, -1) if i == d else slice(None)
+                for i in range(N)
+            ]] *= 2
+
+    with Timer("sum"):
+        outputs = np.sum(
+            output_components * np.reshape(
+                fft_image,
+                (*fft_image.shape, 1)
             ),
-            edge_shape
+            axis=tuple(range(N))
         )
-
-    outputs = np.sum(
-        output_components * np.reshape(
-            fft_image,
-            (*fft_image.shape, 1)
-        ),
-        axis=tuple(range(N))
-    )
 
     return outputs
 
@@ -126,16 +127,17 @@ if __name__ == '__main__':
 
     fft_vals = dctn(f)
 
-    f_reconstructed = manual_inverse_continuous_cosine_transform(
-        query_points=np.stack(
-            [
-                X.reshape(-1) / x_max,
-                Y.reshape(-1) / y_max,
-            ],
-            axis=1
-        ),
-        fft_image=fft_vals
-    ).reshape(X.shape)
+    with Timer("Overall"):
+        f_reconstructed = manual_inverse_continuous_cosine_transform(
+            query_points=np.stack(
+                [
+                    X.reshape(-1) / x_max,
+                    Y.reshape(-1) / y_max,
+                ],
+                axis=1
+            ),
+            fft_image=fft_vals
+        ).reshape(X.shape)
 
     f_reconstructed_scipy = fft.idctn(
         fft_vals,
