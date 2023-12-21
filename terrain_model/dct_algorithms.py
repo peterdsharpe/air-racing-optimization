@@ -14,10 +14,15 @@ def dctn(
     )
 
 
+import jax
+
+
+# @jax.jit
 def manual_inverse_continuous_cosine_transform(
         query_points,
         fft_image,
         include_gradient=False,
+        use_einsum_if_possible=True,
 ):
     """
             A manual implementation of the inverse N-dimensional continuous cosine transform using only np.cos().
@@ -33,6 +38,8 @@ def manual_inverse_continuous_cosine_transform(
             Returns: Values of the original function at the query points, a 1D array of shape (M,)
 
             """
+    # import jax.numpy as np
+    # query_points = np.array(query_points)
     ### Use the fft_image to determine the number of dimensions
     N = len(fft_image.shape)
 
@@ -72,52 +79,55 @@ def manual_inverse_continuous_cosine_transform(
         edge_shape = [1] * (N + 1)
         edge_shape[d] = fft_image.shape[d]
 
-        with Timer("cos"):
-            # As part of undoing the DCT-Type-1 normalization,
-            # We multiply every value, except those on the first and last rows, by 2.
-            # This is more-quickly implemented by multiplying the first and last rows by 0.5, and then
-            # multiplying the whole thing by 2 ** N at the end.
-            multiplier = np.ones(edge_shape)
-            multiplier[*[
-                [0, -1] if i == d else slice(None)
-                for i in range(N)
-            ]] = 0.5
+        # As part of undoing the DCT-Type-1 normalization,
+        # We multiply every value, except those on the first and last rows, by 2.
+        # This is more-quickly implemented by multiplying the first and last rows by 0.5, and then
+        # multiplying the whole thing by 2 ** N at the end.
+        multiplier = np.ones(edge_shape)
+        multiplier[*[
+            [0, -1] if i == d else slice(None)
+            for i in range(N)
+        ]] = 0.5
+        # multiplier = multiplier.at[  # For JAX
+        #     *[
+        #         [0, -1] if i == d else slice(None)
+        #         for i in range(N)
+        #         ]
+        # ].set(0.5)
 
-            output_components = (
-                    multiplier
-                    * np.cos(  # This is allocating, but faster.
-                np.reshape(
-                    np.pi * np.arange(fft_image.shape[d]),  # The normalized frequency
-                    edge_shape
-                )
-                * np.reshape(
-                    query_points[:, d],
-                    query_points_shape
-                ))
-                    * output_components
+        output_components = (
+                multiplier
+                * np.cos(
+            np.reshape(
+                np.pi * np.arange(fft_image.shape[d]),  # The normalized frequency
+                edge_shape
             )
+            * np.reshape(
+                query_points[:, d],
+                query_points_shape
+            ))
+                * output_components
+        )
 
-    with Timer("sum"):
+    if N <= 25 and use_einsum_if_possible:
+        input_subscript = ''.join([chr(97 + i) for i in range(N)]) + 'k'  # 'ijk...k' for N dimensions
+        output_subscript = 'k'  # Sum over all but the last axis
+        einsum_subscript = f'{input_subscript},{input_subscript[:-1]}->{output_subscript}'
 
-        if N <= 25:
-            input_subscript = ''.join([chr(97 + i) for i in range(N)]) + 'k'  # 'ijk...k' for N dimensions
-            output_subscript = 'k'  # Sum over all but the last axis
-            einsum_subscript = f'{input_subscript},{input_subscript[:-1]}->{output_subscript}'
-
-            return 2 ** N * np.einsum(
-                einsum_subscript,  # Analogous to 'ijk,ij->k',
-                output_components,
+        return 2 ** N * np.einsum(
+            einsum_subscript,  # Analogous to 'ijk,ij->k',
+            output_components,
+            fft_image,
+            optimize="greedy"
+        )
+    else:
+        return 2 ** N * np.sum(
+            output_components * np.reshape(
                 fft_image,
-                optimize="greedy"
-            )
-        else:
-            return 2 ** N * np.sum(
-                output_components * np.reshape(
-                    fft_image,
-                    (*fft_image.shape, 1)
-                ),
-                axis=tuple(range(N))
-            )
+                (*fft_image.shape, 1)
+            ),
+            axis=tuple(range(N))
+        )
 
 
 if __name__ == '__main__':
@@ -150,7 +160,7 @@ if __name__ == '__main__':
                 ],
                 axis=1
             ),
-            fft_image=fft_vals
+            fft_image=fft_vals,
         ).reshape(X.shape)
 
     f_reconstructed_scipy = fft.idctn(
