@@ -37,10 +37,12 @@ j_lims += np.round(np.array([-padding_distance, padding_distance]) / dx_east).as
 i_lims = np.clip(i_lims, 0, terrain_data["elev"].shape[0] - 1)
 j_lims = np.clip(j_lims, 0, terrain_data["elev"].shape[1] - 1)
 
-zoomed_terrain_data = {
+terrain_data_zoomed = {
     "elev"             : terrain_data["elev"][i_lims[0]:i_lims[1], j_lims[0]:j_lims[1]],
     "north_edges"      : terrain_data["north_edges"][i_lims[0]:i_lims[1]],
     "east_edges"       : terrain_data["east_edges"][j_lims[0]:j_lims[1]],
+    "dx_north": dx_north,
+    "dx_east": dx_east,
     "north_start_index": np.argmin(np.abs(terrain_data["north_edges"][i_lims[0]:i_lims[1]] - north_start)),
     "east_start_index" : np.argmin(np.abs(terrain_data["east_edges"][j_lims[0]:j_lims[1]] - east_start)),
     "north_end_index"  : np.argmin(np.abs(terrain_data["north_edges"][i_lims[0]:i_lims[1]] - north_end)),

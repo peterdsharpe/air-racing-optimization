@@ -1,7 +1,7 @@
 import aerosandbox as asb
 import aerosandbox.numpy as np
 from aerosandbox.tools import units as u
-from terrain_model.load_raw_data import lat_lon_to_north_east, terrain_data
+from get_task_info import terrain_data_zoomed
 import matplotlib.pyplot as plt
 import aerosandbox.tools.pretty_plots as p
 import pyvista as pv
@@ -9,36 +9,10 @@ from airplane import airplane  # See cessna152.py for details.
 import skimage as ski
 from scipy import ndimage
 
-lat_i = 46 + 32 / 60 + 53.84 / 3600
-lon_i = -(122 + 28 / 60 + 8.98 / 3600)
-north_i, east_i = lat_lon_to_north_east(lat_i, lon_i)
-
-north_f, east_f = lat_lon_to_north_east(
-    lat=46 + 16 / 60 + 37.56 / 3600,
-    lon=-(121 + 34 / 60 + 38.70 / 3600),
-)
-
-i_lims = np.sort(np.array([
-    np.argmin(np.abs(terrain_data["north_edges"] - north_i)),
-    np.argmin(np.abs(terrain_data["north_edges"] - north_f)),
-]))
-j_lims = np.sort(np.array([
-    np.argmin(np.abs(terrain_data["east_edges"] - east_i)),
-    np.argmin(np.abs(terrain_data["east_edges"] - east_f)),
-]))
-i_lims += np.array([-100, 100])
-j_lims += np.array([-100, 100])
-i_lims = np.clip(i_lims, 0, terrain_data["elev"].shape[0] - 1)
-j_lims = np.clip(j_lims, 0, terrain_data["elev"].shape[1] - 1)
-
-terrain_data_zoomed = terrain_data["elev"][i_lims[0]:i_lims[1], j_lims[0]:j_lims[1]]
-north_edges_zoomed = terrain_data["north_edges"][i_lims[0]:i_lims[1]]
-east_edges_zoomed = terrain_data["east_edges"][j_lims[0]:j_lims[1]]
-
 costs = (
-        terrain_data_zoomed
+        terrain_data_zoomed["elev"]
         - ndimage.gaussian_filter(
-    terrain_data_zoomed,
+    terrain_data_zoomed["elev"],
     500
 )
 )
@@ -48,12 +22,18 @@ g = ski.graph.MCP_Geometric(
     costs=costs,
     fully_connected=True,
     sampling=(
-        np.mean(np.diff(north_edges_zoomed)),
-        np.mean(np.diff(east_edges_zoomed)),
+        terrain_data_zoomed["dx_north"],
+        terrain_data_zoomed["dx_east"],
     )
 )
-start = np.array([-100, 100])
-end = np.array([100, -100])
+start = np.array([
+    terrain_data_zoomed["north_start_index"],
+    terrain_data_zoomed["east_start_index"],
+])
+end = np.array([
+    terrain_data_zoomed["north_end_index"],
+    terrain_data_zoomed["east_end_index"],
+])
 cumulative_costs, traceback_array = g.find_costs(
     starts=[start],
     ends=[end],
@@ -68,17 +48,17 @@ plt.imshow(
     cmap='Reds',
     origin="lower",
     extent=(
-        east_edges_zoomed[0],
-        east_edges_zoomed[-1],
-        north_edges_zoomed[0],
-        north_edges_zoomed[-1],
+        terrain_data_zoomed["east_edges"][0],
+        terrain_data_zoomed["east_edges"][-1],
+        terrain_data_zoomed["north_edges"][0],
+        terrain_data_zoomed["north_edges"][-1],
     ),
-    alpha=1,
+    alpha=0.2,
     zorder=2.5
 )
 plt.plot(
-    east_edges_zoomed[traceback[:, 1]],
-    north_edges_zoomed[traceback[:, 0]],
+    terrain_data_zoomed["east_edges"][traceback[:, 1]],
+    terrain_data_zoomed["north_edges"][traceback[:, 0]],
     "-",
     color="red",
     linewidth=3,
@@ -86,14 +66,14 @@ plt.plot(
 )
 
 plt.imshow(
-    terrain_data_zoomed,
+    terrain_data_zoomed["elev"],
     cmap='terrain',
     origin="lower",
     extent=(
-        east_edges_zoomed[0],
-        east_edges_zoomed[-1],
-        north_edges_zoomed[0],
-        north_edges_zoomed[-1],
+        terrain_data_zoomed["east_edges"][0],
+        terrain_data_zoomed["east_edges"][-1],
+        terrain_data_zoomed["north_edges"][0],
+        terrain_data_zoomed["north_edges"][-1],
     ),
     alpha=1,
     zorder=2
