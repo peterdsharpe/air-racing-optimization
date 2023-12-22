@@ -165,7 +165,7 @@ def manual_inverse_continuous_cosine_transform(
         )
 
 
-def cas_micct(
+def cas_vec_micct(
         query_points,
         fft_image,
 ):
@@ -176,7 +176,7 @@ def cas_micct(
         def __init__(self):
             cas.Callback.__init__(self)
             self.construct(
-                "MICCTfunction",
+                "MICCTvecfunction",
                 # {
                 #     "enable_fd": True,
                 # }
@@ -269,7 +269,98 @@ def cas_micct(
 
     res = function_instance(
         cas.reshape(query_points, -1, 1)
-        # cas.reshape(query_points, -1, 1)
+    )
+    res._function_instance = function_instance
+
+    return res
+
+def cas_micct(
+        query_points,
+        fft_image,
+):
+    import numpy as np
+    import casadi as cas
+    # Dynamically construct a callback:
+    class Function(cas.Callback):
+        def __init__(self):
+            cas.Callback.__init__(self)
+            self.construct(
+                "MICCTfunction",
+                # {
+                #     "enable_fd": True,
+                # }
+            )
+
+        def get_n_in(self):
+            return query_points.shape[1]
+
+        def get_n_out(self):
+            return 1
+
+        def get_sparsity_in(self, *args):
+            return cas.Sparsity.dense(1, 1)
+
+        def get_sparsity_out(self, *args):
+            return cas.Sparsity.dense(1, 1)
+
+        def eval(self, arg):
+            qp_input = np.array([
+                float(a) for a in arg
+            ])
+
+            return [manual_inverse_continuous_cosine_transform(
+                query_points=qp_input,
+                fft_image=fft_image,
+            )]
+
+        def has_jacobian(self, *args):
+            return True
+
+        def get_jacobian(self, name, inames, onames, opts):
+
+            class JacFun(cas.Callback):
+                def __init__(self):
+                    cas.Callback.__init__(self)
+                    self.construct(name,
+                                   {
+                                       "enable_fd": True,
+                                       "fd_method": "forward",
+                                   }
+                                   )
+
+                def get_n_in(self):
+                    return query_points.shape[1] + 1
+
+                def get_n_out(self):
+                    return query_points.shape[1]
+
+                def get_sparsity_in(self, n_in):
+                    return cas.Sparsity.dense(1, 1)
+
+                def get_sparsity_out(self, n_out):
+                    return cas.Sparsity.dense(1, 1)
+
+                def eval(self, arg):
+                    qp_input = np.array([
+                        float(a) for a in arg[:-1]
+                    ])
+
+                    jac = manual_inverse_continuous_cosine_transform(
+                        query_points=qp_input,
+                        fft_image=fft_image,
+                        include_gradient=True,
+                    )[1]
+
+                    return list(jac.ravel())
+
+            self.jac_callback = JacFun()
+            return self.jac_callback
+
+    function_instance = Function()
+
+    res = function_instance(
+        query_points[:, 0],
+        query_points[:, 1],
     )
     res._function_instance = function_instance
 
@@ -399,11 +490,26 @@ if __name__ == '__main__':
 
     import casadi as cas
 
+    print("Vectorized version")
+
+    # cas_input = cas.MX(points)
+    # cas_sym_input = cas.MX.sym("p", *points.shape)
+    # o1 = cas_vec_micct(cas_input, fft_vals)
+    # o2 = cas.evalf(o1)
+    #
+    # jo1s = cas_vec_micct(cas_sym_input, fft_vals)
+    # with Timer("jo2s"):
+    #     jo2s = cas.evalf(cas.graph_substitute(jo1s, [cas_sym_input], [cas_input]))
+
+    print("Non-vectorized version")
+
     cas_input = cas.MX(points)
     cas_sym_input = cas.MX.sym("p", *points.shape)
     o1 = cas_micct(cas_input, fft_vals)
     o2 = cas.evalf(o1)
 
-    o1s = cas_micct(cas_sym_input, fft_vals)
+    jo1s = cas_micct(cas_sym_input, fft_vals)
     with Timer("jo2s"):
         jo2s = cas.evalf(cas.graph_substitute(jo1s, [cas_sym_input], [cas_input]))
+
+    jacnv = cas.evalf(cas.graph_substitute(cas.jacobian(jo1s, cas_sym_input), [cas_sym_input], [cas_input]))
