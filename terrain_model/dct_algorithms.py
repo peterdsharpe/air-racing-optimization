@@ -3,7 +3,9 @@ from scipy import fft
 from aerosandbox.tools.code_benchmarking import Timer
 
 from jax import config
+
 config.update("jax_enable_x64", True)
+
 
 def dctn(
         x
@@ -217,7 +219,7 @@ def cas_micct(
                     cas.Callback.__init__(self)
                     self.construct(name,
                                    {
-                                        "enable_fd": True,
+                                       "enable_fd": True,
                                    }
                                    )
 
