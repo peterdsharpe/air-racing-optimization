@@ -1,5 +1,5 @@
-from load_raw_data import terrain_data, north_east_to_normalized_coordinates, lat_lon_to_north_east
-from dct_algorithms import dctn, manual_inverse_continuous_cosine_transform
+from terrain_model.load_raw_data import terrain_data, north_east_to_normalized_coordinates, lat_lon_to_north_east
+from terrain_model.dct_algorithms import dctn, manual_inverse_continuous_cosine_transform, cas_micct
 from scipy import fft
 import aerosandbox.numpy as np
 import matplotlib.pyplot as plt
@@ -28,10 +28,16 @@ def get_elevation_fourier_north_east(
         axis=1
     )
 
-    return manual_inverse_continuous_cosine_transform(
-        query_points=query_points_normalized,
-        fft_image=fft_image[:resolution[0], :resolution[1]]
-    )
+    if np.is_casadi_type(query_points_normalized):
+        return cas_micct(
+            query_points=query_points_normalized,
+            fft_image=fft_image[:resolution[0], :resolution[1]]
+        )
+    else:
+        return manual_inverse_continuous_cosine_transform(
+            query_points=query_points_normalized,
+            fft_image=fft_image[:resolution[0], :resolution[1]]
+        )
 
 
 def get_elevation_fourier_lat_lon(
