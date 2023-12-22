@@ -9,7 +9,7 @@ config.update("jax_enable_x64", True)
 
 def dctn(
         x: np.ndarray
-):
+) -> np.ndarray:
     return fft.dctn(
         x,
         type=1,
