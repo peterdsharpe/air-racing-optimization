@@ -52,9 +52,10 @@ opti.subject_to(
 airspeed = 200 * u.knot
 duration = np.sum(ds_squared ** 0.5) / airspeed
 
-from terrain_model.interpolated_model import get_elevation_interpolated_north_east
+# from terrain_model.interpolated_model import get_elevation_interpolated_north_east
+from terrain_model.fourier_model import get_elevation_fourier_north_east
 
-terrain_altitude = get_elevation_interpolated_north_east(
+terrain_altitude = get_elevation_fourier_north_east(
     query_points_north=north,
     query_points_east=east,
     resolution=(500, 1500)
@@ -65,7 +66,13 @@ opti.minimize(
     2.5 * np.mean(terrain_altitude) / 1300
 )
 
-sol = opti.solve()
+sol = opti.solve(
+    options={
+        "ipopt.hessian_approximation": "limited-memory",
+        "ipopt.limited_memory_max_history": (2 * N),
+        # "ipopt.derivative_test": "first-order",
+    }
+)
 
 path = np.stack(
     sol([

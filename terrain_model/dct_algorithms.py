@@ -24,19 +24,19 @@ def manual_inverse_continuous_cosine_transform(
         jax=False,
 ):
     """
-            A manual implementation of the inverse N-dimensional continuous cosine transform using only np.cos().
+    A manual implementation of the inverse N-dimensional continuous cosine transform using only np.cos().
 
-            Args:
-                query_points: Query points, a 2D array of shape (M, N), where M is the number of points and N is the number of dimensions.
-                    * Should be normalized to the range [0, 1] in each dimension.
+    Args:
+        query_points: Query points, a 2D array of shape (M, N), where M is the number of points and N is the number of dimensions.
+            * Should be normalized to the range [0, 1] in each dimension.
 
-                    * As an example, for a single query point on a 2D DCT, the shape would be (1, 2).
+            * As an example, for a single query point on a 2D DCT, the shape would be (1, 2).
 
-                fft_image: The DCT coefficients of the image, which has N dimensions, each of arbitrary length.
+        fft_image: The DCT coefficients of the image, which has N dimensions, each of arbitrary length.
 
-            Returns: Values of the original function at the query points, a 1D array of shape (M,)
+    Returns: Values of the original function at the query points, a 1D array of shape (M,)
 
-            """
+    """
     if jax:
         import jax.numpy as np
     else:
@@ -163,6 +163,117 @@ def manual_inverse_continuous_cosine_transform(
         )
 
 
+def cas_micct(
+        query_points,
+        fft_image,
+):
+    import numpy as np
+    import casadi as cas
+    # Dynamically construct a callback:
+    class Function(cas.Callback):
+        def __init__(self):
+            cas.Callback.__init__(self)
+            self.construct(
+                "MICCTfunction",
+                # {
+                #     "enable_fd": True,
+                # }
+            )
+
+        def get_n_in(self):
+            return 1
+
+        def get_n_out(self):
+            return 1
+
+        def get_sparsity_in(self, *args):
+            return cas.Sparsity.dense(np.prod(query_points.shape), 1)
+
+        def get_sparsity_out(self, *args):
+            return cas.Sparsity.dense(query_points.shape[0], 1)
+
+        def eval(self, arg):
+            qp_input = np.reshape(
+                np.array(arg[0]),
+                query_points.shape,
+                order="F"
+            )
+
+            return [manual_inverse_continuous_cosine_transform(
+                query_points=qp_input,
+                fft_image=fft_image,
+            )]
+
+        def has_jacobian(self, *args):
+            return True
+
+        def get_jac_sparsity(self, *args):
+            return cas.repmat(cas.Sparsity_diag(query_points.shape[0]), 1, query_points.shape[1])
+
+        def get_jacobian(self, name, inames, onames, opts):
+
+            class JacFun(cas.Callback):
+                def __init__(self):
+                    cas.Callback.__init__(self)
+                    self.construct(name,
+                                   {
+                                        "enable_fd": True,
+                                   }
+                                   )
+
+                def get_n_in(self):
+                    return 2
+
+                def get_n_out(self):
+                    return 1
+
+                def get_sparsity_in(self, n_in):
+                    if n_in == 0:
+                        return cas.Sparsity.dense(np.prod(query_points.shape), 1)
+                    if n_in == 1:
+                        return cas.Sparsity.dense(query_points.shape[0], 1)
+
+                def get_sparsity_out(self, n_out):
+                    return cas.repmat(cas.Sparsity_diag(query_points.shape[0]), 1, query_points.shape[1])
+
+                def eval(self, arg):
+                    qp_input = np.reshape(
+                        np.array(arg[0]),
+                        query_points.shape,
+                        order="F"
+                    )
+
+                    jac = manual_inverse_continuous_cosine_transform(
+                        query_points=qp_input,
+                        fft_image=fft_image,
+                        include_gradient=True,
+                    )[1]
+
+                    from scipy import sparse
+
+                    casjac = sparse.hstack(
+                        [
+                            sparse.diags(jac[:, i], format="csc")
+                            for i in range(jac.shape[1])
+                        ]
+                    )
+
+                    return [casjac]
+
+            self.jac_callback = JacFun()
+            return self.jac_callback
+
+    function_instance = Function()
+
+    res = function_instance(
+        cas.reshape(query_points, -1, 1)
+        # cas.reshape(query_points, -1, 1)
+    )
+    res._function_instance = function_instance
+
+    return res
+
+
 if __name__ == '__main__':
 
     ### Checks for correctness
@@ -266,7 +377,7 @@ if __name__ == '__main__':
     func = jax.vmap(jax.value_and_grad(func))
     jfunc = jax.jit(func)
 
-    points = np.random.uniform(0, 1, (5, 2))
+    points = np.random.uniform(0, 1, (100, 2))
 
     value_manual, grad_manual = manual_inverse_continuous_cosine_transform(
         query_points=points,
@@ -283,3 +394,14 @@ if __name__ == '__main__':
         print(grad_jax)
         print(f"atol: {np.max(np.abs(grad_manual - grad_jax))}")
         print(f"rtol: {np.max(np.abs(np.log(grad_manual / grad_jax)))}")
+
+    import casadi as cas
+
+    cas_input = cas.MX(points)
+    cas_sym_input = cas.MX.sym("p", *points.shape)
+    o1 = cas_micct(cas_input, fft_vals)
+    o2 = cas.evalf(o1)
+
+    o1s = cas_micct(cas_sym_input, fft_vals)
+    with Timer("jo2s"):
+        jo2s = cas.evalf(cas.graph_substitute(jo1s, [cas_sym_input], [cas_input]))
