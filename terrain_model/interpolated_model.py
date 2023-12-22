@@ -27,7 +27,6 @@ def get_elevation_interpolated_north_east(
         zoom=(north_zoom_factor, east_zoom_factor),
         order=3,
     )
-    print(elev_resampled.shape)
 
     north_edges = np.linspace(
         terrain_data["north_edges"].min(),
