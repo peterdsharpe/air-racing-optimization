@@ -15,6 +15,7 @@ def get_elevation_interpolated_north_east(
         query_points_north: np.ndarray,
         query_points_east: np.ndarray,
         resolution=_default_resolution,
+        terrain_data=terrain_data,
 ):
     query_points_north = np.reshape(np.array(query_points_north), -1)
     query_points_east = np.reshape(np.array(query_points_east), -1)

@@ -69,4 +69,5 @@ terrain_cost_heuristic = (
 terrain_cost_heuristic = np.exp(
     (terrain_cost_heuristic - terrain_cost_heuristic.mean())
     / terrain_cost_heuristic.std()
+    * 5 # this heuristic controls the altitude vs. speed tradeoff
 )

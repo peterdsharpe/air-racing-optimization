@@ -50,7 +50,7 @@ if __name__ == '__main__':
             terrain_data_zoomed["north_edges"][0],
             terrain_data_zoomed["north_edges"][-1],
         ),
-        alpha=0.2,
+        alpha=0.0,
         zorder=2.5
     )
     plt.plot(
@@ -77,6 +77,7 @@ if __name__ == '__main__':
     )
     p.equal()
     p.show_plot(
+        "Discrete Pathfinding",
         rotate_axis_labels=False,
         savefig=[
             # f"./figures/trajectory_{resolution}.svg",
