@@ -55,45 +55,7 @@ for k, v in control_interpolators.items():
 
 N = len(dyn)
 
-
-fig, ax = plt.subplots(
-    figsize=(16, 6)
-)
-plt.plot(
-    dyn.y_e,
-    dyn.x_e,
-    "-",
-    color="red",
-    linewidth=3,
-    zorder=4
-)
-
-plt.imshow(
-    terrain_data_zoomed["elev"],
-    cmap='terrain',
-    origin="lower",
-    extent=(
-        terrain_data_zoomed["east_edges"][0],
-        terrain_data_zoomed["east_edges"][-1],
-        terrain_data_zoomed["north_edges"][0],
-        terrain_data_zoomed["north_edges"][-1],
-    ),
-    alpha=1,
-    zorder=2
-)
-p.equal()
-p.show_plot(
-    "3D Continuous Optimization",
-    rotate_axis_labels=False,
-    savefig=[
-        # f"./figures/trajectory_{resolution}.svg",
-    ]
-)
-
-N = len(dyn)
-
-
-plotter = pv.Plotter()
+plotter = pv.Plotter(off_screen=True)
 plotter.window_size = 1920, 1080
 plotter.set_background(
     color="#FFFFFF",
@@ -105,7 +67,7 @@ dyn.draw(
     plotter=plotter,
     show=False,
     n_vehicles_to_draw=int(N / (video_fps / 4)),
-    scale_vehicle_model=14 * 5,
+    scale_vehicle_model=14,
     # scale_vehicle_model=1,
     trajectory_line_color="red",
     draw_global_grid=False,
@@ -127,5 +89,49 @@ plotter.add_mesh(
     smooth_shading=True,
     show_scalar_bar=False,
 )
-plotter.enable_terrain_style()
-plotter.show()
+# plotter.enable_terrain_style()
+
+# plotter.show(auto_close=False)
+
+# plotter.open_gif("trajectory.gif")
+plotter.open_movie("trajectory.mp4", framerate=video_fps)
+
+# i = 0
+
+
+up_vectors = np.stack(
+    dyn.convert_axes(0, 0, -1, "body", "earth"),
+    axis=1
+)
+
+from tqdm import tqdm
+
+# for i in tqdm(range(1)):
+for i in tqdm(range((N - 1))):
+    # plotter.camera.azimuth = np.degrees(dyn.track[0])
+    # plotter.camera.elevation = np.degrees(dyn.gamma[0]) * -1
+    # plotter.camera.roll = np.degrees(dyn.bank[0]) + 180
+    # plotter.camera.up = (0, 0, -1)
+    pos = np.array([
+        dyn.x_e[i],
+        dyn.y_e[i],
+        dyn.z_e[i] - 5,
+    ])
+    next_pos = np.array([
+        dyn.x_e[i + 1],
+        dyn.y_e[i + 1],
+        dyn.z_e[i + 1] - 5,
+    ])
+    dir = next_pos - pos
+    dir /= np.linalg.norm(dir)
+
+    plotter.camera.position = pos
+    plotter.camera.focal_point = pos + dir * 10
+    plotter.camera.up = (0, 0, -1)
+    plotter.camera.roll = plotter.camera.roll + np.degrees(dyn.bank[i])
+    plotter.camera.view_angle = 90
+    plotter.camera.clipping_range = (1, 200000)
+
+    plotter.write_frame()
+
+plotter.close()
