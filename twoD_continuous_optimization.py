@@ -24,9 +24,28 @@ path_downsampled = interpolate.interp1d(
     axis=0
 )(np.linspace(0, s_path[-1], N))
 
+path_downsampled = ndimage.gaussian_filter(
+    path_downsampled,
+    sigma=1,
+    axes=[0],
+)
+
+path_downsampled_length = np.sum(
+    np.sum(np.diff(path_downsampled, axis=0) ** 2, axis=1) ** 0.5
+)
+
+assumed_airspeed = 0.8 * 343
+
 ### Initialize the problem
 print("Solving 2D problem...")
 opti = asb.Opti()
+
+duration = opti.variable(
+    init_guess=path_downsampled_length / assumed_airspeed,
+    lower_bound=0
+)
+
+time = np.linspace(0, duration, N)
 
 east = opti.variable(
     init_guess=path_downsampled[:, 0],
@@ -41,26 +60,29 @@ opti.subject_to([
     north[-1] == terrain_data_zoomed["north_end"],
 ])
 
-ds_squared = (
+dt = np.diff(time)
+ds = (
         np.diff(east) ** 2 +
         np.diff(north) ** 2
-)
-
+) ** 0.5
 opti.subject_to(
-    np.diff(ds_squared) == 0
+    ds == (assumed_airspeed * dt)
 )
-
-assumed_airspeed = 0.8 * 343
-duration = np.sum(ds_squared ** 0.5) / assumed_airspeed
 
 from terrain_model.interpolated_model import get_elevation_interpolated_north_east
 
 terrain_altitude = get_elevation_interpolated_north_east(
     query_points_north=north,
     query_points_east=east,
-    resolution=(500, 1500),
+    resolution=(800, 2400),
     terrain_data=terrain_data_zoomed
 )
+opti.subject_to([
+    east  / 1e4 > terrain_data_zoomed["east_edges"][0] / 1e4,
+    east  / 1e4 < terrain_data_zoomed["east_edges"][-1] / 1e4,
+    north / 1e4  > terrain_data_zoomed["north_edges"][0] / 1e4,
+    north / 1e4  < terrain_data_zoomed["north_edges"][-1] / 1e4,
+])
 
 # from terrain_model.fourier_model import get_elevation_fourier_north_east
 #
@@ -72,7 +94,7 @@ terrain_altitude = get_elevation_interpolated_north_east(
 
 opti.minimize(
     duration / 500 +
-    5 * np.mean(terrain_altitude) / 1300
+    15 * np.mean(terrain_altitude) / 1300
 )
 
 sol = opti.solve(
@@ -80,14 +102,34 @@ sol = opti.solve(
         # "ipopt.hessian_approximation": "limited-memory",
         # "ipopt.limited_memory_max_history": (2 * N),
         # "ipopt.derivative_test": "first-order",
-    }
+    },
+    max_iter=10000
 )
+# opti.set_initial_from_sol(sol)
+#
+# ### G constraint
+# allowed_G = 9
+# allowable_discrete_track_change = (
+#         (allowed_G * 9.81) / assumed_airspeed * (duration / N)
+# )
+#
+# track = np.arctan2(
+#     np.diff(east),
+#     np.diff(north),
+# )
+# opti.subject_to([
+#     np.diff(track) < allowable_discrete_track_change,
+#     np.diff(track) > -allowable_discrete_track_change,
+# ])
+#
+# sol = opti.solve()
 
 solution_quantities = {
     "N": N,
     "east": sol(east),
     "north": sol(north),
-    "ds_squared": sol(ds_squared),
+    "ds": sol(ds).mean(), # Valid since all are constrained to be equal
+    "dt": sol(dt).mean(), # Valid since all are constrained to be equal
     "assumed_airspeed": assumed_airspeed,
     "duration": sol(duration),
     "terrain_altitude": sol(terrain_altitude),
@@ -109,9 +151,6 @@ solution_quantities["track"] = np.arctan2(
     np.gradient(solution_quantities["east"]),
     np.gradient(solution_quantities["north"]),
 )
-
-solution_quantities["ds"] = np.ones(N) * solution_quantities["ds_squared"].mean() ** 0.5
-solution_quantities["dt"] = solution_quantities["ds"] / solution_quantities["assumed_airspeed"]
 
 solution_quantities["gamma"] = np.arctan2(
     np.gradient(solution_quantities["assumed_altitude"]),
