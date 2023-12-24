@@ -154,7 +154,7 @@ from terrain_model.interpolated_model import get_elevation_interpolated_north_ea
 terrain_altitude = get_elevation_interpolated_north_east(
     query_points_north=dyn.x_e,
     query_points_east=dyn.y_e,
-    resolution=(600, 1800),
+    resolution=(1000, 3000),
     terrain_data=terrain_data_zoomed
 )
 altitude_agl = dyn.altitude - terrain_altitude
@@ -178,7 +178,7 @@ opti.minimize(
     5 * np.mean(dyn.altitude) / 1300
 )
 
-sol = opti.solve()
+sol = opti.solve(max_iter=1000000)
 
 dyn=sol(dyn)
 
@@ -187,6 +187,8 @@ if __name__ == '__main__':
     dyn.save(
         "./final_results/dyn.asb"
     )
+
+    np.save("./final_results/time.npy", sol(time))
 
     fig, ax = plt.subplots(
         figsize=(16, 6)

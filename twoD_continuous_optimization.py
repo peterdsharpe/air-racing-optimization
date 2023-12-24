@@ -6,7 +6,7 @@ from scipy import interpolate, ndimage
 import matplotlib.pyplot as plt
 import aerosandbox.tools.pretty_plots as p
 
-N = 600
+N = 1000
 
 ### Downsample the initial path
 ds_path = (
@@ -50,7 +50,7 @@ opti.subject_to(
     np.diff(ds_squared) == 0
 )
 
-assumed_airspeed = 200 * u.knot
+assumed_airspeed = 0.8 * 343
 duration = np.sum(ds_squared ** 0.5) / assumed_airspeed
 
 from terrain_model.interpolated_model import get_elevation_interpolated_north_east
@@ -58,7 +58,7 @@ from terrain_model.interpolated_model import get_elevation_interpolated_north_ea
 terrain_altitude = get_elevation_interpolated_north_east(
     query_points_north=north,
     query_points_east=east,
-    resolution=(300, 900),
+    resolution=(500, 1500),
     terrain_data=terrain_data_zoomed
 )
 
