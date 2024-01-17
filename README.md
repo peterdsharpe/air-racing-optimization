@@ -1,4 +1,4 @@
-# Air Racing Optimization
+# Air Racing Trajectory Optimization
 
 Peter Sharpe
 
