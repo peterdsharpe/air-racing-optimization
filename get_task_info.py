@@ -6,8 +6,8 @@ from scipy import ndimage
 
 print("Loading task-specific info and terrain data...")
 
-lat_start = 46 + 32 / 60 + 53.84 / 3600
-lon_start = -(122 + 28 / 60 + 8.98 / 3600)
+lat_start = 46 + 32 / 60 + 27 / 3600
+lon_start = -(122 + 26 / 60 + 47.61 / 3600)
 north_start, east_start = lat_lon_to_north_east(
     46 + 32 / 60 + 53.84 / 3600,
     -(122 + 28 / 60 + 8.98 / 3600)
