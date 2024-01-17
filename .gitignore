@@ -10,7 +10,7 @@ __pycache__/
 svg-inkscape/
 ~*.*
 *.tif
-
+*.mp4
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
