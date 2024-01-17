@@ -13,8 +13,8 @@ dyn: asb.DynamicsPointMass3DSpeedGammaTrack = asb.load(
 time: np.ndarray = dyn.other_fields["time"]
 
 speedup_over_realtime = 1  # How much faster than realtime to render the video
-video_fps = 30  # Frames per second
-video_fraction = (0.6, 0.7)  # Only render part of the video
+video_fps = 60  # Frames per second
+video_fraction = (0, 1)  # Only render part of the video
 
 frame_time = speedup_over_realtime / video_fps
 
@@ -161,7 +161,7 @@ plotter.add_mesh(
     show_scalar_bar=False,
 )
 
-plotter.open_movie("trajectory_short.mp4", framerate=video_fps, quality=5)
+plotter.open_movie("trajectory.mp4", framerate=video_fps, quality=5)
 
 from tqdm import tqdm
 
