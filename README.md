@@ -6,7 +6,7 @@ Peter Sharpe
 
 This is an aircraft trajectory optimization case study focusing on fast, low-altitude flight through mountainous terrain. Ultimately, this nap-of-the-earth flight is often used for evading radar detection while reaching an objective.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_HpraPLS6G4?si=bYJqMxd2883x5RL2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+![video](./final_results/trajectory-short.mp4)
 
 The task is to fly a fighter jet (loosely modeled after an F/A-18) between two points near Riffe Lake, Washington, USA.
 
