@@ -61,7 +61,6 @@ This allows us to formulate the actual (continuous) objective function that we a
 
 A slight regularization penalty is added on the squared second derivative of any control inputs (in the 2D case, the input is essentially just the bearing angle as a function of time).
 
-For the purpo
 The figure below shows the 2D path (red) compared to to the discrete path from the previous step (dashed light green).
 
 ![2D_path](./figures/2D_trajectory.svg)
@@ -69,3 +68,7 @@ The figure below shows the 2D path (red) compared to to the discrete path from t
 ## Step 3: 3D Optimization
 
 The result of this 2D optimization is then fed in as an initial guess for a 3D optimization problem with full dynamics constraints. This is done using direct collocation, with a 3rd-order cubic spline integrator.
+
+This yields the following final trajectory:
+
+![3D_path](./figures/trajectory.svg)
