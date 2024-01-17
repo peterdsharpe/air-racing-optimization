@@ -14,7 +14,7 @@ time: np.ndarray = dyn.other_fields["time"]
 
 speedup_over_realtime = 1  # How much faster than realtime to render the video
 video_fps = 60  # Frames per second
-video_fraction = (0, 1)  # Only render part of the video
+video_fraction = (0, 1)  # Only render part of the video (0.75 to 0.8 is interesting)
 
 frame_time = speedup_over_realtime / video_fps
 
