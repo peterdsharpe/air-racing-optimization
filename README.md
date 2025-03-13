@@ -6,6 +6,8 @@ Peter Sharpe
 
 This is an aircraft trajectory optimization case study focusing on fast, low-altitude flight through mountainous terrain. Ultimately, this nap-of-the-earth flight is often used for evading radar detection while reaching an objective.
 
+**Update: read more about this problem in this thesis: https://dspace.mit.edu/handle/1721.1/157809 (pg. 233-239)**
+
 Full video of optimized flight trajectory here: https://youtu.be/_HpraPLS6G4
 
 Preview:
