@@ -61,7 +61,7 @@ Following the discrete pathfinding problem, we perform a 2D optimization study t
 
 This allows us to formulate the actual (continuous) objective function that we are interested in, which is roughly to minimize the following unitless quantity:
 
-(duration / (240 seconds))^4 + 15 * mean(terrain_altitude / (440 meters))
+$\rm (duration / (240\ seconds))^4 + 15 \cdot mean((terrain\ altitude) / (440\ meters))$
 
 A slight regularization penalty is added on the squared second derivative of any control inputs (in the 2D case, the input is essentially just the bearing angle as a function of time).
 
